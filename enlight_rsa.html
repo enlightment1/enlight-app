@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENLIGHT RSA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+
+:root { --bg-primary:#0d0d0d;--bg-secondary:#1a1a1a;--bg-tertiary:#242424;--bg-sidebar:#121212;--bg-hover:#2a2a2a;--bg-active:#333333;--text-primary:#f0f0f0;--text-secondary:#b0b0b0;--text-muted:#808080;--border:#2a2a2a;--border-light:#333333;--accent:#3ddc84;--accent-hover:#2db86e;--accent-light:rgba(61,220,132,0.1);--accent-text:#3ddc84;--danger:#ff5f57;--warning:#ffbd2e;--success:#28c840;--shadow-sm:0 1px 2px rgba(0,0,0,0.3);--shadow:0 1px 3px rgba(0,0,0,0.4);--shadow-md:0 4px 12px rgba(0,0,0,0.5);--radius-sm:8px;--radius:12px;--radius-lg:16px;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+* { margin:0;padding:0;box-sizing:border-box; }
+body { font-family:var(--font-sans);background:var(--bg-primary);color:var(--text-primary);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden; }
+
+/* ===== STRUCTURED LESSON OUTPUT ===== */
+.lesson-generated { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:24px;font-size:0.95rem;line-height:1.7;color:var(--text-primary);animation:fadeIn 0.3s ease; }
+.lesson-generated h2 { font-size:1.4rem;font-weight:700;color:var(--text-primary);margin:28px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border); }
+.lesson-generated h3 { font-size:1.15rem;font-weight:700;color:var(--accent-text);margin:24px 0 12px; }
+.lesson-generated h4 { font-size:1rem;font-weight:600;color:var(--text-primary);margin:20px 0 10px; }
+.lesson-generated p { margin-bottom:14px;color:var(--text-secondary); }
+.lesson-generated ul { margin:12px 0 16px 0;padding-left:0;list-style:none; }
+.lesson-generated ul li { position:relative;padding-left:24px;margin-bottom:10px;color:var(--text-secondary); }
+.lesson-generated ul li::before { content:'';position:absolute;left:6px;top:10px;width:6px;height:6px;background:var(--accent);border-radius:50%; }
+.lesson-generated ol { margin:12px 0 16px 20px;color:var(--text-secondary); }
+.lesson-generated ol li { margin-bottom:10px; }
+.lesson-generated strong { color:var(--text-primary);font-weight:600; }
+.lesson-generated em { color:var(--text-secondary);font-style:italic; }
+.lesson-generated blockquote { border-left:3px solid var(--accent);padding:12px 16px;margin:16px 0;background:var(--bg-tertiary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--text-primary);font-weight:500; }
+.lesson-generated code { background:rgba(61,220,132,0.1);color:var(--accent-text);padding:2px 8px;border-radius:4px;font-family:'SF Mono',Monaco,monospace;font-size:0.85em; }
+.lesson-generated pre { background:var(--bg-tertiary);padding:16px;border-radius:var(--radius-sm);overflow-x:auto;margin:12px 0;font-family:'SF Mono',Monaco,monospace;font-size:0.85em;border:1px solid var(--border); }
+.lesson-generated table { width:100%;border-collapse:collapse;margin:16px 0;background:var(--bg-tertiary);border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border); }
+.lesson-generated th { background:var(--bg-hover);color:var(--text-primary);font-weight:600;padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);font-size:0.9rem; }
+.lesson-generated td { padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text-secondary);font-size:0.9rem; }
+.lesson-generated tr:last-child td { border-bottom:none; }
+.lesson-generated tr:hover td { background:var(--bg-hover); }
+.lesson-generated .formula-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:16px 0;text-align:center;font-size:1.1rem;color:var(--text-primary); }
+.lesson-generated .key-point { background:var(--accent-light);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;color:var(--text-primary); }
+.lesson-generated .example-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:16px 0; }
+.lesson-generated .example-box h4 { margin-top:0;color:var(--accent-text); }
+.lesson-generated hr { border:none;border-top:1px solid var(--border);margin:24px 0; }
+.lesson-generated img { max-width:100%;border-radius:var(--radius-sm);margin:12px 0; }
+
+/* Math formula styling */
+.lesson-generated .math { font-family:'Times New Roman',serif;font-style:italic;font-size:1.05em;color:var(--text-primary); }
+.lesson-generated sub, .lesson-generated sup { font-size:0.75em; }
+
+.loader { position:fixed;inset:0;background:var(--bg-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10000;transition:opacity 0.5s ease,visibility 0.5s ease; }
+.loader h1 { color:var(--text-primary); }
+.loader p { color:var(--text-secondary); }
+.loader.hidden { opacity:0;pointer-events:none;visibility:hidden; }
+.loader-icon { width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite; }
+.loader h1 { font-size:1.5rem;font-weight:600;margin-top:20px;color:var(--text-primary);letter-spacing:-0.5px; }
+.loader p { font-size:0.875rem;color:var(--text-secondary);margin-top:6px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.app { display:flex;height:100vh;overflow:hidden; }
+.sidebar { width:260px;background:var(--bg-sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0; }
+.sidebar-header { padding:20px 16px;border-bottom:1px solid var(--border); }
+.sidebar-logo { display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.05rem;color:var(--text-primary); }
+.sidebar-logo i { color:var(--accent);font-size:1.2rem; }
+.sidebar-nav { flex:1;padding:12px 10px;overflow-y:auto; }
+.nav-section { margin-bottom:8px; }
+.nav-section-title { font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);padding:8px 12px; }
+.nav-item { display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);cursor:pointer;font-size:0.875rem;color:var(--text-secondary);transition:all 0.15s ease;margin-bottom:2px;text-decoration:none;border:none;background:none;width:100%;text-align:left;font-family:inherit; }
+.nav-item:hover { background:var(--bg-hover);color:var(--text-primary); }
+.nav-item.active { background:var(--accent-light);color:var(--accent-text);font-weight:500; }
+.nav-item i { width:18px;text-align:center;font-size:0.9rem; }
+.sidebar-footer { padding:12px 16px;border-top:1px solid var(--border); }
+.user-chip { display:flex;align-items:center;gap:10px;padding:8px;border-radius:var(--radius-sm);cursor:pointer;transition:background 0.15s; }
+.user-chip:hover { background:var(--bg-hover); }
+.user-avatar { width:32px;height:32px;background:var(--accent);color:#0d0d0d;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;flex-shrink:0; }
+.user-info { flex:1;min-width:0; }
+.user-info h4 { font-size:0.8rem;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.user-info p { font-size:0.7rem;color:var(--text-muted); }
+.mobile-nav { display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg-secondary);border-top:1px solid var(--border);z-index:1000;padding:8px 0; }
+.mobile-nav-item { flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px;cursor:pointer;color:var(--text-muted);font-size:0.65rem;border:none;background:none;font-family:inherit; }
+.mobile-nav-item i { font-size:1.1rem; }
+.mobile-nav-item.active { color:var(--accent-text); }
+.mobile-nav-item.active i { color:var(--accent); }
+.main { flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg-primary); }
+.topbar { height:56px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;background:var(--bg-secondary); }
+.topbar-title { font-size:1rem;font-weight:600;color:var(--text-primary); }
+.topbar-actions { display:flex;align-items:center;gap:12px; }
+.btn { display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;border-radius:var(--radius-sm);font-size:0.875rem;font-weight:500;cursor:pointer;transition:all 0.15s ease;border:1px solid transparent;font-family:inherit;text-decoration:none; }
+.btn-sm { padding:6px 12px;font-size:0.8rem; }
+.btn-primary { background:var(--accent);color:#0d0d0d;border-color:var(--accent);font-weight:600; }
+.btn-primary:hover { background:var(--accent-hover);border-color:var(--accent-hover); }
+.btn-ghost { background:transparent;color:var(--text-secondary);border-color:var(--border); }
+.btn-ghost:hover { background:var(--bg-hover);color:var(--text-primary);border-color:var(--border-light); }
+.content { flex:1;overflow-y:auto;padding:24px 32px;padding-bottom:80px;background:var(--bg-primary); }
+.section { display:none; }
+.section.active { display:block; }
+.card { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:box-shadow 0.2s,border-color 0.2s; }
+.card:hover { border-color:var(--border-light);box-shadow:var(--shadow-md); }
+.card-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:16px; }
+.card-title { font-size:0.95rem;font-weight:700;color:var(--text-primary); }
+.card-subtitle { font-size:0.8rem;color:var(--text-muted);margin-top:2px; }
+.grid { display:grid;gap:16px; }
+.grid-2 { grid-template-columns:repeat(2,1fr); }
+.grid-3 { grid-template-columns:repeat(3,1fr); }
+.grid-4 { grid-template-columns:repeat(4,1fr); }
+.grid-auto { grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
+.stat-card { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:14px;transition:all 0.2s; }
+.stat-card:hover { border-color:var(--border-light);box-shadow:var(--shadow-md); }
+.stat-icon { width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0; }
+.stat-icon.green { background:rgba(40,200,64,0.1);color:var(--success); }
+.stat-icon.blue { background:rgba(59,130,246,0.1);color:#3b82f6; }
+.stat-icon.orange { background:rgba(251,191,36,0.1);color:#fbbf24; }
+.stat-icon.purple { background:rgba(168,85,247,0.1);color:#a855f7; }
+.stat-value { font-size:1.5rem;font-weight:700;color:var(--text-primary);line-height:1.2; }
+.stat-label { font-size:0.8rem;color:var(--text-muted);margin-top:2px; }
+.progress-bar { height:6px;background:var(--bg-hover);border-radius:3px;overflow:hidden; }
+.progress-fill { height:100%;border-radius:3px;transition:width 0.5s ease; }
+.progress-fill.green { background:var(--success); }
+.progress-fill.blue { background:#3b82f6; }
+.progress-fill.orange { background:#fbbf24; }
+.progress-item { margin-bottom:16px; }
+.progress-header { display:flex;justify-content:space-between;margin-bottom:6px; }
+.progress-name { font-size:0.85rem;font-weight:500;color:var(--text-primary); }
+.progress-value { font-size:0.8rem;color:var(--text-muted);font-weight:500; }
+.activity-item { display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border); }
+.activity-item:last-child { border-bottom:none;padding-bottom:0; }
+.activity-icon { width:32px;height:32px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;background:var(--bg-tertiary); }
+.activity-text { font-size:0.85rem;color:var(--text-primary);line-height:1.4; }
+.activity-time { font-size:0.75rem;color:var(--text-muted);margin-top:2px; }
+.grade-card { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:24px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden; }
+.grade-card:hover { border-color:var(--accent);box-shadow:var(--shadow-md);transform:translateY(-2px); }
+.grade-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity 0.2s; }
+.grade-card:hover::before { opacity:1; }
+.grade-card h3 { font-size:1.1rem;font-weight:600;margin-bottom:6px; }
+.grade-card p { font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px; }
+.grade-meta { display:flex;align-items:center;gap:12px; }
+.grade-badge { font-size:0.75rem;font-weight:500;padding:4px 10px;border-radius:20px;background:var(--bg-tertiary);color:var(--text-secondary);border:1px solid var(--border); }
+.subject-card { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all 0.2s; }
+.subject-card:hover { border-color:var(--accent);box-shadow:var(--shadow-md); }
+.subject-card h4 { font-size:0.95rem;font-weight:600;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px; }
+.subject-card h4 i { color:var(--accent);font-size:0.85rem; }
+.subject-card p { font-size:0.8rem;color:var(--text-muted); }
+.topic-tags { display:flex;flex-wrap:wrap;gap:6px;margin-top:12px; }
+.topic-tag { font-size:0.7rem;padding:3px 8px;border-radius:4px;background:var(--bg-tertiary);color:var(--text-secondary);font-weight:500;border:1px solid var(--border); }
+.faculty-card { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all 0.2s; }
+.faculty-card:hover { border-color:var(--accent);box-shadow:var(--shadow-md); }
+.faculty-header { padding:20px;color:white;position:relative; }
+.faculty-header.eng { background:linear-gradient(135deg,#4338ca,#6d28d9); }
+.faculty-header.sci { background:linear-gradient(135deg,#047857,#059669); }
+.faculty-header.med { background:linear-gradient(135deg,#b91c1c,#e11d48); }
+.faculty-header.law { background:linear-gradient(135deg,#b45309,#d97706); }
+.faculty-header.bus { background:linear-gradient(135deg,#14532d,#166534); }
+.faculty-header.art { background:linear-gradient(135deg,#6d28d9,#9333ea); }
+.faculty-header h3 { font-size:1rem;font-weight:600;margin-bottom:4px; }
+.faculty-header p { font-size:0.8rem;opacity:0.9; }
+.faculty-body { padding:16px;background:var(--bg-secondary); }
+.faculty-body li { padding:10px 0;border-bottom:1px solid var(--border);font-size:0.85rem;color:var(--text-secondary);display:flex;align-items:center;gap:8px;cursor:pointer;transition:color 0.15s; }
+.faculty-body li:last-child { border-bottom:none; }
+.faculty-body li:hover { color:var(--accent-text); }
+.faculty-body li i { font-size:0.7rem;color:var(--text-muted); }
+.content-viewer { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden; }
+.content-header { padding:24px 28px;border-bottom:1px solid var(--border);background:var(--bg-secondary); }
+.content-header h2 { font-size:1.25rem;font-weight:600;margin-bottom:4px; }
+.content-header p { font-size:0.85rem;color:var(--text-muted); }
+.content-tabs { display:flex;border-bottom:1px solid var(--border);background:var(--bg-tertiary);padding:0 4px; }
+.content-tab { padding:12px 20px;font-size:0.85rem;font-weight:500;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit; }
+.content-tab:hover { color:var(--text-primary); }
+.content-tab.active { color:var(--accent-text);border-bottom-color:var(--accent);background:var(--bg-secondary); }
+.content-body { padding:24px 28px;min-height:300px;background:var(--bg-secondary); }
+.content-panel { display:none; }
+.content-panel.active { display:block; }
+.lesson-list { list-style:none; }
+.lesson-item { display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s;border-radius:var(--radius-sm);flex-wrap:wrap; }
+.lesson-item:hover { background:var(--bg-tertiary); }
+.lesson-item.active-lesson { background:var(--accent-light);border-left:3px solid var(--accent); }
+.yt-result-card { display:flex;gap:12px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-secondary);cursor:pointer;margin-bottom:10px;transition:all 0.15s; }
+.yt-result-card:hover { border-color:var(--accent);box-shadow:var(--shadow-md); }
+.yt-result-card img { width:120px;height:68px;object-fit:cover;border-radius:6px;flex-shrink:0; }
+.image-gallery { display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border); }
+.image-gallery-title { font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;grid-column:1/-1; }
+.gallery-card { border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--bg-secondary); }
+.gallery-card img { width:100%;height:100px;object-fit:cover;display:block;background:#fff; }
+.gallery-card-attribution { padding:6px 8px;font-size:0.65rem;color:var(--text-muted);line-height:1.3; }
+.gallery-card-attribution a { color:var(--accent-text); }
+.yt-result-info h4 { font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-bottom:4px;line-height:1.3; }
+.yt-result-info p { font-size:0.72rem;color:var(--text-muted); }
+.lesson-notes-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+.lesson-notes-header .btn { font-size:0.75rem;padding:4px 10px; }
+.lesson-item:last-child { border-bottom:none; }
+.lesson-item i { color:var(--accent);font-size:0.85rem; }
+.lesson-item span { font-size:0.9rem;color:var(--text-primary);display:flex;align-items:center;gap:10px; }
+.lesson-generated { width:100%;margin-top:12px;padding:0;background:transparent;border:none;font-size:0.95rem;line-height:1.7;animation:fadeIn 0.3s ease; }
+.lesson-generated h3 { color:var(--accent-text);font-size:1rem;margin:12px 0 6px; }
+.lesson-generated ul { margin-left:20px;margin-bottom:12px; }
+.lesson-generated li { margin-bottom:6px; }
+.lesson-generated code { background:var(--bg-tertiary);padding:2px 6px;border-radius:4px;font-family:'SF Mono',Monaco,monospace;font-size:0.85em; }
+.lesson-generated pre { background:var(--bg-tertiary);padding:12px;border-radius:var(--radius-sm);overflow-x:auto;margin:8px 0;font-family:'SF Mono',Monaco,monospace;font-size:0.85em; }
+.video-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px; }
+.video-card { border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.2s;background:var(--bg-secondary); }
+.video-card:hover { border-color:var(--accent);box-shadow:var(--shadow-md); }
+.video-thumb { position:relative;padding-bottom:56.25%;background:var(--bg-tertiary); }
+.video-thumb img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover; }
+.play-btn { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(255,255,255,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1rem;transition:all 0.2s; }
+.video-card:hover .play-btn { background:var(--accent);color:#0d0d0d;transform:translate(-50%,-50%) scale(1.1); }
+.video-info-card { padding:14px;background:var(--bg-secondary); }
+.video-info-card h4 { font-size:0.9rem;font-weight:500;margin-bottom:4px;color:var(--text-primary); }
+.video-info-card p { font-size:0.75rem;color:var(--text-muted); }
+.notes-content { font-size:0.95rem;line-height:1.7;color:var(--text-primary); }
+.notes-content h2 { font-size:1.4rem;font-weight:700;color:var(--text-primary);margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border); }
+.notes-content h3 { font-size:1.1rem;font-weight:700;color:var(--accent-text);margin:20px 0 10px; }
+.notes-content h4 { font-size:1rem;font-weight:600;color:var(--text-primary);margin:16px 0 8px; }
+.notes-content ul { margin:10px 0 14px 0;padding-left:0;list-style:none; }
+.notes-content ul li { position:relative;padding-left:22px;margin-bottom:8px;color:var(--text-secondary); }
+.notes-content ul li::before { content:'';position:absolute;left:4px;top:9px;width:6px;height:6px;background:var(--accent);border-radius:50%; }
+.notes-content ol { margin:10px 0 14px 20px;color:var(--text-secondary); }
+.notes-content ol li { margin-bottom:8px; }
+.notes-content p { margin-bottom:12px;color:var(--text-secondary); }
+.notes-content blockquote { border-left:3px solid var(--accent);padding:10px 14px;margin:12px 0;background:var(--bg-tertiary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--text-primary);font-weight:500; }
+.notes-content table { width:100%;border-collapse:collapse;margin:12px 0;background:var(--bg-tertiary);border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border); }
+.notes-content th { background:var(--bg-hover);color:var(--text-primary);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border); }
+.notes-content td { padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-secondary); }
+.notes-content tr:last-child td { border-bottom:none; }
+.notes-content .formula-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin:10px 0;text-align:center;font-size:1.05rem; }
+.notes-content .key-point { background:var(--accent-light);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:10px 0; }
+.notes-content .example-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin:10px 0; }
+.notes-content .diagram-box { background:#ffffff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin:14px 0;text-align:center; }
+.notes-content .diagram-box svg { max-width:100%;height:auto;display:block;margin:0 auto; }
+.notes-content .diagram-caption { color:var(--text-muted);font-size:0.8rem;font-style:italic;margin:8px 0 0; }
+.notes-content code { background:rgba(61,220,132,0.1);color:var(--accent-text);padding:2px 6px;border-radius:4px;font-family:'SF Mono',Monaco,monospace;font-size:0.85em; }
+.notes-content pre { background:var(--bg-tertiary);padding:12px;border-radius:var(--radius-sm);overflow-x:auto;margin:8px 0;font-family:'SF Mono',Monaco,monospace;font-size:0.85em;border:1px solid var(--border); }
+.exam-container { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;max-width:800px;margin:0 auto; }
+.exam-header { text-align:center;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border); }
+.exam-header h2 { font-size:1.25rem;font-weight:600;margin-bottom:8px; }
+.exam-timer { display:inline-flex;align-items:center;gap:8px;background:var(--bg-tertiary);padding:8px 20px;border-radius:20px;font-weight:600;font-size:1rem;color:var(--accent-text);margin-top:12px;border:1px solid var(--border); }
+.question { margin-bottom:28px;padding:20px;background:var(--bg-tertiary);border-radius:var(--radius);border:1px solid var(--border); }
+.question h4 { font-size:0.95rem;font-weight:600;margin-bottom:16px;color:var(--text-primary); }
+.options { display:flex;flex-direction:column;gap:8px; }
+.option { padding:14px 16px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:12px;font-size:0.9rem;color:var(--text-primary); }
+.option:hover { border-color:var(--accent);background:var(--accent-light); }
+.option.selected { border-color:var(--accent);background:var(--accent-light); }
+.option-circle { width:22px;height:22px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:var(--text-muted);flex-shrink:0; }
+.option.selected .option-circle { background:var(--accent);border-color:var(--accent);color:#0d0d0d; }
+.option.correct { border-color:var(--success);background:rgba(40,200,64,0.08); }
+.option.correct .option-circle { background:var(--success);border-color:var(--success);color:#0d0d0d; }
+.option.wrong { border-color:var(--danger);background:rgba(255,95,87,0.08); }
+.option.wrong .option-circle { background:var(--danger);border-color:var(--danger);color:#0d0d0d; }
+.tutor-container { max-width:800px;margin:0 auto;display:flex;flex-direction:column;height:calc(100vh - 200px);border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-secondary);overflow:hidden; }
+.tutor-header { padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg-tertiary); }
+.tutor-avatar { width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0d0d0d;font-size:0.9rem;flex-shrink:0; }
+.tutor-header h3 { font-size:0.95rem;font-weight:600; }
+.tutor-header p { font-size:0.75rem;color:var(--text-muted);display:flex;align-items:center;gap:6px; }
+.status-dot { width:6px;height:6px;background:var(--success);border-radius:50%;display:inline-block; }
+.tutor-chat { flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;background:var(--bg-secondary); }
+.chat-message { max-width:85%;padding:14px 18px;border-radius:var(--radius);line-height:1.6;font-size:0.9rem;animation:fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0;transform:translateY(6px); } to { opacity:1;transform:translateY(0); } }
+.chat-message.user { align-self:flex-end;background:var(--accent);color:#0d0d0d;border-bottom-right-radius:4px;font-weight:500; }
+.chat-message.bot { align-self:flex-start;background:var(--bg-secondary);color:var(--text-primary);border-bottom-left-radius:4px;border:1px solid var(--border); }
+.chat-message.bot .bot-label { font-size:0.75rem;font-weight:600;color:var(--accent-text);margin-bottom:6px;display:flex;align-items:center;gap:6px; }
+.chat-message.bot ul { margin:8px 0 0 0;list-style:none;padding:0; }
+.chat-message.bot li { position:relative;padding-left:20px;margin-bottom:6px;color:var(--text-secondary); }
+.chat-message.bot li::before { content:'';position:absolute;left:4px;top:8px;width:5px;height:5px;background:var(--accent);border-radius:50%; }
+.chat-message.bot code { background:rgba(61,220,132,0.1);color:var(--accent-text);padding:2px 6px;border-radius:4px;font-family:'SF Mono',Monaco,monospace;font-size:0.85em; }
+.chat-message.bot pre { background:var(--bg-tertiary);padding:12px;border-radius:var(--radius-sm);overflow-x:auto;margin:8px 0;font-family:'SF Mono',Monaco,monospace;font-size:0.85em;border:1px solid var(--border); }
+.chat-message.bot h3 { font-size:1rem;font-weight:700;color:var(--accent-text);margin:12px 0 8px; }
+.chat-message.bot h4 { font-size:0.9rem;font-weight:600;color:var(--text-primary);margin:10px 0 6px; }
+.chat-message.bot blockquote { border-left:3px solid var(--accent);padding:8px 12px;margin:8px 0;background:var(--bg-tertiary);border-radius:0 var(--radius-sm) var(--radius-sm) 0; }
+.chat-message.bot table { width:100%;border-collapse:collapse;margin:10px 0;background:var(--bg-tertiary);border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);font-size:0.8rem; }
+.chat-message.bot th { background:var(--bg-hover);color:var(--text-primary);font-weight:600;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border); }
+.chat-message.bot td { padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text-secondary); }
+.chat-message.bot tr:last-child td { border-bottom:none; }
+.chat-message.bot .formula-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;margin:8px 0;text-align:center;font-size:1rem;color:var(--text-primary); }
+.chat-message.bot .key-point { background:var(--accent-light);border-left:3px solid var(--accent);padding:8px 12px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:8px 0; }
+.chat-message.bot .example-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;margin:8px 0; }
+.chat-message.bot .diagram-box { background:#ffffff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin:10px 0;text-align:center; }
+.chat-message.bot .diagram-box svg { max-width:100%;height:auto;display:block;margin:0 auto; }
+.chat-message.bot .diagram-caption { color:var(--text-muted);font-size:0.75rem;font-style:italic;margin:6px 0 0; }
+.typing-indicator { display:flex;gap:4px;padding:14px 18px; }
+.typing-indicator span { width:6px;height:6px;background:var(--accent);border-radius:50%;animation:typing 1.4s infinite; }
+.typing-indicator span:nth-child(2) { animation-delay:0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay:0.4s; }
+@keyframes typing { 0%,60%,100% { transform:translateY(0); } 30% { transform:translateY(-6px); } }
+.tutor-input { padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:12px;background:var(--bg-secondary); }
+.tutor-input input { flex:1;padding:12px 18px;border:1px solid var(--border);border-radius:24px;outline:none;font-size:0.9rem;font-family:inherit;transition:border-color 0.15s,box-shadow 0.15s;background:var(--bg-tertiary);color:var(--text-primary); }
+.tutor-input input:focus { border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light); }
+.tutor-input input::placeholder { color:var(--text-muted); }
+.tutor-input button { width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);color:#0d0d0d;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.tutor-input button:hover { background:var(--accent-hover);transform:scale(1.05); }
+.tutor-input button:disabled { opacity:0.5;cursor:not-allowed; }
+.payment-card { max-width:520px;margin:0 auto;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;text-align:center; }
+.payment-card .price { font-size:2.5rem;font-weight:700;color:var(--text-primary);margin:16px 0; }
+.payment-card .price span { font-size:0.9rem;color:var(--text-muted);font-weight:400; }
+.feature-list { display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;margin:24px 0; }
+.feature-item { display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary); }
+.feature-item i { color:var(--success);font-size:0.8rem; }
+.payment-details { background:var(--bg-tertiary);border-radius:var(--radius);padding:20px;text-align:left;margin:24px 0;border:1px solid var(--border); }
+.payment-details h4 { font-size:0.9rem;font-weight:600;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:8px; }
+.payment-details p { font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:8px; }
+.payment-details i { color:var(--text-muted);width:16px;font-size:0.8rem; }
+.payment-note { background:var(--bg-tertiary);border-left:3px solid var(--accent);padding:14px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-top:16px;font-size:0.8rem;color:var(--text-secondary);line-height:1.6; }
+.payment-note strong { color:var(--text-primary); }
+.hero { background:linear-gradient(135deg,#1a1a1a 0%,#0d2b1e 100%);border-radius:var(--radius-lg);padding:48px 40px;margin-bottom:32px;text-align:center;border:1px solid var(--border); }
+.hero h1 { font-size:2rem;font-weight:700;color:var(--text-primary);margin-bottom:12px;letter-spacing:-0.5px; }
+.hero p { font-size:1rem;color:var(--text-secondary);max-width:600px;margin:0 auto 24px;line-height:1.6; }
+.hero-badge { display:inline-flex;align-items:center;gap:8px;background:var(--accent-light);color:var(--accent-text);padding:6px 14px;border-radius:20px;font-size:0.8rem;font-weight:500;margin-bottom:20px;border:1px solid var(--accent); }
+.section-title { margin-bottom:24px; }
+.section-title h2 { font-size:1.25rem;font-weight:700;color:var(--text-primary);margin-bottom:4px; }
+.section-title p { font-size:0.875rem;color:var(--text-muted); }
+.modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);z-index:2000;display:none;justify-content:center;align-items:center;padding:20px; }
+.modal-overlay.active { display:flex; }
+.modal { background:var(--bg-secondary);border-radius:var(--radius-lg);padding:32px;max-width:420px;width:100%;box-shadow:var(--shadow-md);animation:modalSlide 0.25s ease;position:relative;border:1px solid var(--border); }
+@keyframes modalSlide { from { transform:translateY(-20px);opacity:0; } to { transform:translateY(0);opacity:1; } }
+.modal h2 { font-size:1.1rem;font-weight:600;color:var(--text-primary);margin-bottom:4px; }
+.modal .subtitle { font-size:0.85rem;color:var(--text-muted);margin-bottom:24px; }
+.form-group { margin-bottom:16px; }
+.form-group label { display:block;margin-bottom:6px;font-weight:500;font-size:0.8rem;color:var(--text-primary); }
+.form-group input { width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);outline:none;font-size:0.9rem;font-family:inherit;transition:all 0.15s;background:var(--bg-tertiary);color:var(--text-primary); }
+.form-group input:focus { border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light); }
+.modal .btn { width:100%;margin-top:8px; }
+.modal-footer { text-align:center;margin-top:16px;font-size:0.8rem;color:var(--text-muted); }
+.modal-footer a { color:var(--accent-text);font-weight:600;cursor:pointer;text-decoration:none; }
+.close-modal { position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);transition:all 0.15s;border:none;background:var(--bg-hover);font-size:1rem; }
+.close-modal:hover { background:var(--bg-active);color:var(--text-primary); }
+.video-modal .modal { max-width:800px;padding:0;overflow:hidden; }
+.video-container { position:relative;padding-bottom:56.25%;background:#000; }
+.video-container iframe { position:absolute;inset:0;width:100%;height:100%;border:none; }
+.video-info { padding:20px 24px;background:var(--bg-secondary); }
+.video-info h3 { font-size:1rem;font-weight:600;margin-bottom:4px;color:var(--text-primary); }
+.video-info p { font-size:0.85rem;color:var(--text-muted); }
+.uni-lesson-modal .modal { max-width:720px;padding:0;overflow:hidden; }
+.uni-lesson-header { padding:20px 24px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,var(--accent),#1a5f3f);color:white; }
+.uni-lesson-header h3 { color:white;font-size:1.1rem;font-weight:600; }
+.uni-lesson-header p { color:rgba(255,255,255,0.9);font-size:0.85rem; }
+.uni-lesson-body { padding:24px;max-height:65vh;overflow-y:auto;font-size:0.95rem;line-height:1.7;background:var(--bg-primary); }
+.uni-lesson-body h2 { font-size:1.4rem;font-weight:700;color:var(--text-primary);margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border); }
+.uni-lesson-body h3 { color:var(--accent-text);font-size:1.1rem;font-weight:700;margin:20px 0 10px; }
+.uni-lesson-body h4 { font-size:1rem;font-weight:600;color:var(--text-primary);margin:16px 0 8px; }
+.uni-lesson-body ul { margin:10px 0 14px 0;padding-left:0;list-style:none; }
+.uni-lesson-body ul li { position:relative;padding-left:22px;margin-bottom:8px;color:var(--text-secondary); }
+.uni-lesson-body ul li::before { content:'';position:absolute;left:4px;top:9px;width:6px;height:6px;background:var(--accent);border-radius:50%; }
+.uni-lesson-body ol { margin:10px 0 14px 20px;color:var(--text-secondary); }
+.uni-lesson-body ol li { margin-bottom:8px; }
+.uni-lesson-body blockquote { border-left:3px solid var(--accent);padding:10px 14px;margin:12px 0;background:var(--bg-tertiary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--text-primary);font-weight:500; }
+.uni-lesson-body code { background:rgba(61,220,132,0.1);color:var(--accent-text);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:0.85em; }
+.uni-lesson-body pre { background:var(--bg-tertiary);padding:12px;border-radius:var(--radius-sm);overflow-x:auto;margin:8px 0;border:1px solid var(--border); }
+.uni-lesson-body table { width:100%;border-collapse:collapse;margin:12px 0;background:var(--bg-tertiary);border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border); }
+.uni-lesson-body th { background:var(--bg-hover);color:var(--text-primary);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border); }
+.uni-lesson-body td { padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-secondary); }
+.uni-lesson-body tr:last-child td { border-bottom:none; }
+.uni-lesson-body .formula-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin:10px 0;text-align:center;font-size:1.05rem; }
+.uni-lesson-body .key-point { background:var(--accent-light);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:10px 0; }
+.uni-lesson-body .example-box { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin:10px 0; }
+.groq-badge { display:inline-flex;align-items:center;gap:6px;background:rgba(61,220,132,0.1);color:var(--accent-text);padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600; }
+.api-key-banner { background:var(--accent-light);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px; }
+.api-key-banner p { font-size:0.85rem;color:var(--accent-text);margin:0; }
+.api-key-banner button { font-size:0.8rem;padding:6px 12px;white-space:nowrap; }
+footer { border-top:1px solid var(--border);padding:24px 32px;background:var(--bg-sidebar); }
+.footer-content { max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px; }
+.footer-brand { display:flex;align-items:center;gap:8px;font-weight:600;font-size:0.9rem;color:var(--text-primary); }
+.footer-brand i { color:var(--accent); }
+.footer-links { display:flex;gap:20px; }
+.footer-links a { font-size:0.8rem;color:var(--text-muted);text-decoration:none;transition:color 0.15s;cursor:pointer; }
+.footer-links a:hover { color:var(--text-primary); }
+.footer-copy { font-size:0.75rem;color:var(--text-muted); }
+.empty-state { text-align:center;padding:60px 20px;color:var(--text-muted); }
+.empty-state i { font-size:2.5rem;margin-bottom:16px;opacity:0.5;color:var(--text-muted); }
+.empty-state h3 { font-size:1rem;font-weight:600;color:var(--text-primary);margin-bottom:8px; }
+.empty-state p { font-size:0.85rem;max-width:400px;margin:0 auto; }
+.toast-container { position:fixed;top:20px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:8px; }
+.toast { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;box-shadow:var(--shadow-md);display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text-primary);animation:toastIn 0.3s ease;max-width:350px; }
+.toast.success { border-left:3px solid var(--success); }
+.toast.error { border-left:3px solid var(--danger); }
+.toast.info { border-left:3px solid #2563eb; }
+@keyframes toastIn { from { transform:translateX(100%);opacity:0; } to { transform:translateX(0);opacity:1; } }
+.toast i { font-size:1rem; }
+.toast.success i { color:var(--success); }
+.toast.error i { color:var(--danger); }
+.toast.info i { color:var(--accent-text); }
+.exam-result { text-align:center;padding:40px;background:var(--bg-tertiary);border-radius:var(--radius);margin-bottom:24px; }
+.exam-result-score { font-size:3rem;font-weight:700;color:var(--accent); }
+.exam-result-label { font-size:0.9rem;color:var(--text-muted);margin-top:4px; }
+.exam-result-breakdown { margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
+.exam-result-item { text-align:center; }
+.exam-result-item .value { font-size:1.25rem;font-weight:600;color:var(--text-primary); }
+.exam-result-item .label { font-size:0.75rem;color:var(--text-muted); }
+@media (max-width:768px) {
+  .sidebar { display:none; }
+  .mobile-nav { display:flex; }
+  .grid-2,.grid-3,.grid-4 { grid-template-columns:1fr; }
+  .feature-list { grid-template-columns:1fr; }
+  .content { padding:16px;padding-bottom:80px; }
+  .hero { padding:32px 20px; }
+  .hero h1 { font-size:1.5rem; }
+  .tutor-container { height:calc(100vh - 160px); }
+  .exam-result-breakdown { grid-template-columns:1fr; }
+  .topbar { padding:0 16px; }
+  .api-key-banner { flex-direction:column;align-items:flex-start; }
+}
+.subject-img-wrap { width:100%;height:140px;border-radius:8px;overflow:hidden;margin-bottom:12px;background:var(--bg-tertiary);border:1px solid var(--border); }
+.subject-img-wrap img { width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease; }
+.subject-card:hover .subject-img-wrap img { transform:scale(1.05); }
+.subject-header-img { width:100%;height:220px;border-radius:12px;overflow:hidden;margin-bottom:20px;background:var(--bg-tertiary);border:1px solid var(--border); }
+.subject-header-img img { width:100%;height:100%;object-fit:cover; }
+.faculty-img-wrap { width:100%;height:160px;border-radius:12px 12px 0 0;overflow:hidden;background:var(--bg-tertiary);border-bottom:1px solid var(--border); }
+.faculty-img-wrap img { width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease; }
+.faculty-card:hover .faculty-img-wrap img { transform:scale(1.05); }
+.lesson-topic-img { width:100%;height:180px;border-radius:8px;overflow:hidden;margin:12px 0;background:var(--bg-tertiary);border:1px solid var(--border); }
+.lesson-topic-img img { width:100%;height:100%;object-fit:cover; }
+
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border);border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--text-muted); }
+
+</style>
+</head>
+<body>
+<div class="loader" id="loader">
+  <div class="loader-icon"></div>
+  <h1>ENLIGHT RSA</h1>
+  <p>Loading your learning environment...</p>
+  <p style="font-size:0.75rem;color:var(--text-muted);margin-top:12px;font-weight:500;">Created by Lwazi Zwane &middot; EnlightQuants AI</p>
+</div>
+<div class="toast-container" id="toast-container"></div>
+<div class="modal-overlay active" id="auth-gate" style="z-index:9500;">
+  <div class="modal" style="max-width:400px;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <i class="fas fa-graduation-cap" style="font-size:2rem;color:var(--accent);"></i>
+      <h2 style="margin-top:10px;">ENLIGHT RSA</h2>
+      <p class="subtitle" id="auth-mode-subtitle">Log in to continue</p>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="auth-email-input" placeholder="you@example.com" autocomplete="username"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="auth-password-input" placeholder="••••••••" autocomplete="current-password"></div>
+    <p id="auth-error" style="color:var(--danger);font-size:0.8rem;margin-bottom:10px;display:none;"></p>
+    <button class="btn btn-primary" style="width:100%;" id="auth-submit-btn" onclick="submitAuth()">Log In</button>
+    <p style="text-align:center;font-size:0.8rem;margin-top:14px;color:var(--text-muted);">
+      <span id="auth-toggle-text">Don't have an account?</span>
+      <a href="#" onclick="toggleAuthMode(event)" id="auth-toggle-link" style="color:var(--accent-text);font-weight:600;">Sign Up</a>
+    </p>
+    <p id="auth-forgot-row" style="text-align:center;font-size:0.8rem;margin-top:8px;">
+      <a href="#" onclick="openForgotPassword(event)" style="color:var(--text-muted);">Forgot password?</a>
+    </p>
+  </div>
+</div>
+<div class="modal-overlay" id="forgot-password-modal" style="z-index:9600;">
+  <div class="modal" style="max-width:400px;">
+    <button class="close-modal" onclick="closeModal('forgot-password')"><i class="fas fa-times"></i></button>
+    <h2>Reset your password</h2>
+    <p class="subtitle">Enter your email and we'll send a reset link (if an account exists for it).</p>
+    <div class="form-group"><label>Email</label><input type="email" id="forgot-email-input" placeholder="you@example.com"></div>
+    <p id="forgot-status-msg" style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;"></p>
+    <button class="btn btn-primary" style="width:100%;" onclick="submitForgotPassword()">Send Reset Link</button>
+  </div>
+</div>
+<div class="modal-overlay" id="reset-password-modal" style="z-index:9600;">
+  <div class="modal" style="max-width:400px;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <i class="fas fa-key" style="font-size:2rem;color:var(--accent);"></i>
+      <h2 style="margin-top:10px;">Set a new password</h2>
+    </div>
+    <div class="form-group"><label>New password</label><input type="password" id="reset-new-password-input" placeholder="••••••••"></div>
+    <p id="reset-status-msg" style="font-size:0.8rem;color:var(--danger);margin-bottom:10px;display:none;"></p>
+    <button class="btn btn-primary" style="width:100%;" onclick="submitResetPassword()">Set New Password</button>
+  </div>
+</div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fas fa-graduation-cap"></i><span>ENLIGHT RSA</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Platform</div>
+        <button class="nav-item active" onclick="showSection('home')" id="nav-home"><i class="fas fa-home"></i><span>Home</span></button>
+        <button class="nav-item" onclick="showSection('university')" id="nav-university"><i class="fas fa-university"></i><span>University</span></button>
+        <button class="nav-item" onclick="showSection('grades')" id="nav-grades"><i class="fas fa-school"></i><span>Grades 8-12</span></button>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Tools</div>
+        <button class="nav-item" onclick="showSection('tutor')" id="nav-tutor"><i class="fas fa-robot"></i><span>AI Tutor</span></button>
+        <button class="nav-item" onclick="showSection('dashboard')" id="nav-dashboard"><i class="fas fa-chart-pie"></i><span>Dashboard</span></button>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Account</div>
+        <button class="nav-item" onclick="showSection('payment')" id="nav-payment"><i class="fas fa-crown"></i><span>Subscription</span></button>
+        <button class="nav-item" onclick="showSection('admin');loadAdminPanel();" id="nav-admin" style="display:none;"><i class="fas fa-user-shield"></i><span>Admin</span></button>
+      </div>
+    </nav>
+
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-title" id="page-title">Home</div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="logout()" title="Log out"><i class="fas fa-sign-out-alt"></i></button>
+        <button class="btn btn-primary btn-sm" onclick="showSection('payment')"><i class="fas fa-crown"></i> Subscribe</button>
+      </div>
+    </header>
+    <div class="content">
+      <section class="section active" id="home">
+        <div class="hero">
+          <div class="hero-badge"><i class="fas fa-bolt"></i> Powered by ENLIGHTQUANTS AI Neural Engine</div>
+          <h1>Your AI-Powered Learning Companion</h1>
+          <p>Comprehensive CAPS curriculum coverage, university preparation, and 24/7 intelligent tutoring for South African students.</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="showSection('university')"><i class="fas fa-university"></i> Explore University</button>
+            <button class="btn btn-ghost" onclick="showSection('grades')"><i class="fas fa-school"></i> Browse Grades</button>
+          </div>
+        </div>
+        <div class="section-title">
+          <h2>Why ENLIGHT RSA?</h2>
+          <p>Everything you need to succeed in South African education</p>
+        </div>
+        <div class="grid grid-auto" style="margin-bottom:32px;">
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title">ENLIGHTQUANTS AI Engine</div><div class="card-subtitle">Real-time lesson generation</div></div>
+              <div class="stat-icon purple" style="width:36px;height:36px;font-size:0.9rem;"><i class="fas fa-bolt"></i></div>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;">Every lesson and tutor response is generated live via the ENLIGHTQUANTS AI Engine. Accurate, fast, and curriculum-aligned.</p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title">University Ready</div><div class="card-subtitle">All major SA institutions</div></div>
+              <div class="stat-icon blue" style="width:36px;height:36px;font-size:0.9rem;"><i class="fas fa-university"></i></div>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;">Full access to UJ, Wits, UP, UCT, UKZN faculties with AI-generated lecture notes and preparatory materials.</p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title">CAPS Aligned</div><div class="card-subtitle">Grades 8 through 12</div></div>
+              <div class="stat-icon green" style="width:36px;height:36px;font-size:0.9rem;"><i class="fas fa-book-open"></i></div>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;">Strictly follows the South African CAPS curriculum with AI-generated lessons for every topic and subject.</p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title">Video Lessons</div><div class="card-subtitle">Curated & organized</div></div>
+              <div class="stat-icon orange" style="width:36px;height:36px;font-size:0.9rem;"><i class="fas fa-video"></i></div>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;">YouTube videos for every topic, organized with AI-generated summaries and progress tracking.</p>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="university">
+        <div class="section-title"><h2>South African Universities</h2><p>Click any course to generate AI-powered curriculum content via ENLIGHTQUANTS AI</p></div>
+        <div class="grid grid-auto" id="uni-container"></div>
+      </section>
+      <section class="section" id="grades">
+        <div class="section-title"><h2>Grades 8 &ndash; 12</h2><p>Select your grade to access CAPS-aligned subjects and materials</p></div>
+        <div class="grid grid-auto" id="grades-container"></div>
+      </section>
+      <section class="section" id="subjects">
+        <button class="btn btn-ghost btn-sm" onclick="showSection('grades')" style="margin-bottom:20px;"><i class="fas fa-arrow-left"></i> Back to Grades</button>
+        <div class="section-title"><h2 id="subjects-grade-title">Grade Subjects</h2><p id="subjects-grade-desc">Select a subject to explore topics</p></div>
+        <div class="grid grid-auto" id="subjects-container"></div>
+      </section>
+      <section class="section" id="content">
+        <button class="btn btn-ghost btn-sm" onclick="backToSubjects()" style="margin-bottom:20px;"><i class="fas fa-arrow-left"></i> Back to Subjects</button>
+        <div class="content-viewer">
+          <div class="content-header"><h2 id="content-title">Subject Name</h2><p id="content-subtitle">Grade X &mdash; Topic Overview</p></div>
+          <div class="content-tabs">
+            <button class="content-tab active" onclick="switchTab('lessons',this)">Lessons</button>
+            <button class="content-tab" onclick="switchTab('videos',this)">Videos</button>
+            <button class="content-tab" onclick="switchTab('notes',this)">Notes</button>
+            <button class="content-tab" onclick="switchTab('exams',this)">Past Exams</button>
+          </div>
+          <div class="content-body">
+            <div class="content-panel active" id="panel-lessons"><ul class="lesson-list" id="lessons-list"></ul></div>
+            <div class="content-panel" id="panel-videos"><div class="video-grid" id="videos-grid"></div></div>
+            <div class="content-panel" id="panel-notes"><div class="notes-content" id="notes-content"></div><div id="lesson-images-gallery"></div></div>
+            <div class="content-panel" id="panel-exams"><div id="exams-list"></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="tutor">
+        <div class="section-title" style="text-align:center;"><h2>ENLIGHTQUANTS AI Neural Tutor</h2><p>Your personal 24/7 neural tutor powered by ENLIGHTQUANTS AI</p></div>
+        <div class="tutor-container">
+          <div class="tutor-header">
+            <div class="tutor-avatar"><i class="fas fa-robot"></i></div>
+            <div><h3>ENLIGHTQUANTS AI Tutor</h3><p><span class="status-dot"></span>Online &mdash; Live ENLIGHTQUANTS AI Neural Engine</p></div>
+          </div>
+          <div class="tutor-chat" id="chat-messages">
+            <div class="chat-message bot">
+              <div class="bot-label"><i class="fas fa-bolt"></i> ENLIGHTQUANTS AI</div>
+              Hello! I am your ENLIGHTQUANTS AI-powered AI tutor with live access to:
+              <ul><li>CAPS curriculum database (Grades 8-12)</li><li>SA university course notes &amp; faculties</li><li>Homework help with real-time AI generation</li><li>Practice exam generation from past papers</li><li>University preparation and career guidance</li></ul>
+              What would you like to learn today?
+            </div>
+          </div>
+          <div class="tutor-input">
+            <input type="text" id="chat-input" placeholder="Ask me anything about CAPS, university, or homework..." onkeypress="if(event.key==='Enter') sendMessage()">
+            <button onclick="sendMessage()" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="dashboard">
+        <div class="section-title"><h2>Dashboard</h2><p>Track your progress and learning activity</p></div>
+        <div class="grid grid-4" style="margin-bottom:24px;">
+          <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-video"></i></div><div><div class="stat-value" id="stat-videos">47</div><div class="stat-label">Videos Watched</div></div></div>
+          <div class="stat-card"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><div><div class="stat-value" id="stat-topics">23</div><div class="stat-label">Topics Completed</div></div></div>
+          <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-file-alt"></i></div><div><div class="stat-value" id="stat-exams">12</div><div class="stat-label">Exams Taken</div></div></div>
+          <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-percentage"></i></div><div><div class="stat-value" id="stat-score">78%</div><div class="stat-label">Average Score</div></div></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card"><div class="card-header"><div class="card-title">Subject Progress</div></div><div id="progress-container"></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">Recent Activity</div></div><div id="activity-container"></div></div>
+        </div>
+      </section>
+      <section class="section" id="payment">
+        <div class="section-title" style="text-align:center;"><h2>Subscription</h2><p>Unlock full access to ENLIGHTQUANTS AI, CAPS data, and all AI features</p></div>
+        <div class="payment-card">
+          <i class="fas fa-crown" style="font-size:2rem;color:var(--accent);"></i>
+          <h3 style="margin-top:12px;font-size:1.1rem;font-weight:600;">Premium Access</h3>
+          <div class="price">R250 <span>/ month</span></div>
+          <div class="feature-list">
+            <span class="feature-item"><i class="fas fa-check"></i> ENLIGHTQUANTS AI Tutor</span>
+            <span class="feature-item"><i class="fas fa-check"></i> University Notes &amp; Data</span>
+            <span class="feature-item"><i class="fas fa-check"></i> CAPS Curriculum Fetch</span>
+            <span class="feature-item"><i class="fas fa-check"></i> All Grades 8-12</span>
+            <span class="feature-item"><i class="fas fa-check"></i> Past Exams</span>
+            <span class="feature-item"><i class="fas fa-check"></i> Video Lessons</span>
+            <span class="feature-item"><i class="fas fa-check"></i> Progress Tracking</span>
+            <span class="feature-item"><i class="fas fa-check"></i> 24/7 Neural Engine</span>
+          </div>
+          <div class="payment-details">
+            <h4><i class="fas fa-mobile-alt"></i> Payment Method</h4>
+            <p><i class="fas fa-university"></i> <strong>Bank:</strong> Capitec / TymeBank</p>
+            <p><i class="fas fa-phone"></i> <strong>Cell:</strong> 063 926 4528</p>
+            <p><i class="fab fa-whatsapp"></i> <strong>WhatsApp:</strong> 063 926 4528</p>
+            <p><i class="fas fa-dollar-sign"></i> <strong>Amount:</strong> R250 / month</p>
+            <div class="payment-note">
+              <strong>How to Subscribe:</strong><br>
+              1. Send R250 to the number above via Capitec or TymeBank<br>
+              2. WhatsApp proof of payment to 063 926 4528<br>
+              3. Include your email address<br>
+              4. Account verified within 24 hours<br>
+              5. Full access unlocks immediately
+            </div>
+          </div>
+          <p style="margin-top:16px;font-size:0.8rem;color:var(--text-muted);"><i class="fas fa-info-circle"></i> Free trial: 2 hours once-off.</p>
+          <div class="payment-proof-form" style="margin-top:20px;text-align:left;border-top:1px solid var(--border);padding-top:20px;" id="account-security-card">
+            <h4 style="margin-bottom:10px;"><i class="fas fa-shield-alt"></i> Account Security</h4>
+            <div class="form-group"><label>Current password</label><input type="password" id="change-current-password-input" placeholder="••••••••"></div>
+            <div class="form-group"><label>New password</label><input type="password" id="change-new-password-input" placeholder="••••••••"></div>
+            <button class="btn btn-ghost" style="width:100%;" onclick="submitChangePassword()"><i class="fas fa-key"></i> Change Password</button>
+            <p id="change-password-status-msg" style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;"></p>
+            <button class="btn btn-ghost" style="width:100%;margin-top:12px;" onclick="logoutOtherDevices()"><i class="fas fa-laptop"></i> Log Out of Other Devices</button>
+            <p id="sessions-status-msg" style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;"></p>
+          </div>
+          <div class="payment-proof-form" style="margin-top:20px;text-align:left;border-top:1px solid var(--border);padding-top:20px;">
+            <h4 style="margin-bottom:10px;"><i class="fas fa-key"></i> Your Own AI Key <span style="color:var(--text-muted);font-weight:400;font-size:0.75rem;">(optional)</span></h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">If you have your own free Groq API key, you can use it directly here. When set, it's used automatically if our servers are unreachable, or instead of waiting for payment approval — meaning AI features work immediately using your own quota, without going through our payment review.</p>
+            <div class="form-group"><label>Groq API Key</label><input type="password" id="own-groq-key-input" placeholder="gsk_..."></div>
+            <button class="btn btn-ghost" style="width:100%;" onclick="saveOwnApiKey()"><i class="fas fa-save"></i> Save Key</button>
+            <button class="btn btn-ghost" style="width:100%;margin-top:8px;" onclick="clearOwnApiKey()"><i class="fas fa-trash"></i> Remove Key</button>
+            <p id="own-key-status-msg" style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;"></p>
+          </div>
+          <div class="payment-proof-form" style="margin-top:20px;text-align:left;border-top:1px solid var(--border);padding-top:20px;">
+            <h4 style="margin-bottom:10px;"><i class="fas fa-upload"></i> Submit Proof of Payment</h4>
+            <div class="form-group"><label>How did you send proof?</label>
+              <select id="payment-method-select" style="width:100%;padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-primary);color:var(--text-primary);font-family:inherit;">
+                <option value="upload">Upload proof here (screenshot/PDF)</option>
+                <option value="whatsapp">Already sent via WhatsApp</option>
+                <option value="email">Already sent via Email</option>
+              </select>
+            </div>
+            <div class="form-group" id="payment-file-group"><label>Upload proof of payment</label><input type="file" id="payment-file-input" accept="image/*,.pdf"></div>
+            <div class="form-group"><label>Reference / note <span style="color:var(--text-muted);font-weight:400;">(your name, date, or reference)</span></label><input type="text" id="payment-reference-input" placeholder="e.g. Thabo M. — paid 1 July"></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="submitPaymentProof()"><i class="fas fa-paper-plane"></i> Submit for Review</button>
+            <button class="btn btn-ghost" style="width:100%;margin-top:8px;" onclick="refreshAccessStatus()"><i class="fas fa-sync"></i> I've already submitted — Refresh Status</button>
+            <p id="payment-status-msg" style="font-size:0.8rem;color:var(--text-muted);margin-top:10px;"></p>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="admin">
+        <div class="section-title"><h2>Admin — Pending Payments</h2><p>Review proof of payment and grant access</p></div>
+        <div id="admin-requests-list"></div>
+      </section>
+      <section class="section" id="exam">
+        <button class="btn btn-ghost btn-sm" onclick="showSection('content')" style="margin-bottom:20px;"><i class="fas fa-arrow-left"></i> Back to Content</button>
+        <div class="exam-container">
+          <div class="exam-header">
+            <h2 id="exam-title">Practice Exam</h2>
+            <p id="exam-subtitle" style="color:var(--text-muted);font-size:0.9rem;">Test your knowledge</p>
+            <div class="exam-timer" id="exam-timer"><i class="fas fa-clock"></i> 30:00</div>
+            <a href="#" id="exam-real-paper-link" target="_blank" rel="noopener" style="display:none;font-size:0.8rem;color:var(--accent-text);margin-top:8px;"><i class="fas fa-file-pdf"></i> Find the real past paper for this exam</a>
+          </div>
+          <div id="exam-questions"></div>
+          <button class="btn btn-primary" style="width:100%;margin-top:24px;" onclick="submitExam()" id="submit-exam-btn"><i class="fas fa-paper-plane"></i> Submit Exam</button>
+          <div id="exam-result-container" style="display:none;"></div>
+        </div>
+      </section>
+    </div>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-brand"><i class="fas fa-graduation-cap"></i><span>ENLIGHT RSA</span></div>
+        <div class="footer-links">
+          <a onclick="showSection('university')">University</a>
+          <a onclick="showSection('grades')">Grades</a>
+          <a onclick="showSection('tutor')">AI Tutor</a>
+          <a onclick="showSection('dashboard')">Dashboard</a>
+        </div>
+        <div class="footer-copy">2026 ENLIGHT RSA. Created by Lwazi Zwane.</div>
+      </div>
+    </footer>
+  </div>
+</div>
+<nav class="mobile-nav">
+  <button class="mobile-nav-item active" onclick="showSection('home')" id="mob-home"><i class="fas fa-home"></i>Home</button>
+  <button class="mobile-nav-item" onclick="showSection('university')" id="mob-university"><i class="fas fa-university"></i>Uni</button>
+  <button class="mobile-nav-item" onclick="showSection('grades')" id="mob-grades"><i class="fas fa-school"></i>Grades</button>
+  <button class="mobile-nav-item" onclick="showSection('tutor')" id="mob-tutor"><i class="fas fa-robot"></i>Tutor</button>
+  <button class="mobile-nav-item" onclick="showSection('dashboard')" id="mob-dashboard"><i class="fas fa-chart-pie"></i>Dash</button>
+</nav>
+<div class="modal-overlay uni-lesson-modal" id="uni-lesson-modal">
+  <div class="modal" style="max-width:720px;padding:0;overflow:hidden;">
+    <button class="close-modal" onclick="closeModal('uni-lesson')" style="top:12px;right:12px;background:rgba(0,0,0,0.3);color:white;"><i class="fas fa-times"></i></button>
+    <div class="uni-lesson-header"><h3 id="uni-lesson-title">Course Title</h3><p id="uni-lesson-subtitle">Faculty</p></div>
+    <div class="uni-lesson-body" id="uni-lesson-body"></div>
+  </div>
+</div>
+<div class="modal-overlay video-modal" id="video-modal">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal('video')" style="top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;"><i class="fas fa-times"></i></button>
+    <div class="video-container"><iframe id="video-iframe" src="" allowfullscreen></iframe></div>
+    <div class="video-info"><h3 id="video-title">Video Title</h3><p id="video-desc">Video description</p></div>
+  </div>
+</div>
+<script>
+const curriculum = {
+  8: {
+    name: "Grade 8", desc: "Senior Phase — Foundation Year",
+    subjects: {
+      "Mathematics": {
+        topics: ["Whole Numbers","Integers","Exponents","Patterns","Functions","Algebra","Geometry"],
+        lessons: ["Introduction to Number Systems","Operations with Integers","Laws of Exponents","Pattern Recognition","Input & Output Values","Simplifying Expressions","Solving Linear Equations","Angles and Lines"],
+        notes: "<h3>Mathematics Grade 8</h3><p>Key concepts include number operations, basic algebra, and geometry fundamentals.</p><ul><li>Natural numbers extend to whole numbers including zero</li><li>Integers include negative numbers</li><li>Exponents represent repeated multiplication</li></ul>",
+        exams: ["Grade 8 Math June Exam 2023","Grade 8 Math November Exam 2023","Grade 8 Math Common Test 1"]
+      },
+      "Natural Sciences": { topics:["Matter & Materials","Energy & Change","Planet Earth & Beyond","Life & Living"], lessons:["States of Matter","Mixtures and Solutions","Energy Transfer","The Solar System","Cells and Organisms"], notes:"<h3>Natural Sciences Grade 8</h3><p>Covers physical and life sciences fundamentals.</p>", exams:["Natural Sciences Exam 2023"] },
+      "Social Sciences": { topics:["History","Geography"], lessons:["Industrial Revolution","Map Skills","Climate and Weather"], notes:"<h3>Social Sciences</h3><p>History and Geography combined.</p>", exams:["Social Sciences Exam 2023"] },
+      "English HL": { topics:["Literature","Language","Writing"], lessons:["Comprehension Skills","Poetry Analysis","Essay Writing"], notes:"<h3>English Home Language</h3><p>Focus on reading, writing, and literature analysis.</p>", exams:["English HL Exam 2023"] },
+      "Technology": { topics:["Design Process","Systems and Control"], lessons:["The Design Cycle","Electrical Systems"], notes:"<h3>Technology</h3><p>Design thinking and technical systems.</p>", exams:["Technology Exam 2023"] }
+    }
+  },
+  9: {
+    name: "Grade 9", desc: "Senior Phase — Critical Year",
+    subjects: {
+      "Mathematics": { topics:["Number Patterns","Functions","Algebra","Geometry","Transformation Geometry","Data Handling"], lessons:["Linear Patterns","Functions and Graphs","Algebraic Techniques","Geometry Theorems","Transformations","Statistics"], notes:"<h3>Mathematics Grade 9</h3><p>Foundation for FET phase mathematics.</p>", exams:["Grade 9 Math June Exam","Grade 9 Math Final Exam"] },
+      "Natural Sciences": { topics:["Atoms","Electricity","Earth Systems","Human Body Systems"], lessons:["Atomic Structure","Electric Circuits","Plate Tectonics","Circulatory System"], notes:"<h3>Natural Sciences Grade 9</h3><p>Introduction to chemistry, physics, and advanced biology.</p>", exams:["Natural Sciences Grade 9 Exam"] },
+      "English HL": { topics:["Novel Study","Drama","Poetry","Language Structures"], lessons:["Novel Analysis","Drama Elements","Poetic Devices","Grammar"], notes:"<h3>English HL Grade 9</h3><p>Advanced literature and language skills.</p>", exams:["English HL Grade 9 Exam"] },
+      "Social Sciences": { topics:["World War","Democracy","Economic Systems"], lessons:["WWI & WWII","Democracy in SA","Economic Geography"], notes:"<h3>Social Sciences Grade 9</h3><p>Modern history and economic geography.</p>", exams:["Social Sciences Grade 9 Exam"] },
+      "Economic Management Sciences": { topics:["Financial Literacy","Entrepreneurship"], lessons:["Budgeting","Business Plan"], notes:"<h3>EMS Grade 9</h3><p>Financial education and business basics.</p>", exams:["EMS Grade 9 Exam"] }
+    }
+  },
+  10: {
+    name: "Grade 10", desc: "FET Phase — Start of Matric Journey",
+    subjects: {
+      "Mathematics": { topics:["Algebra","Equations & Inequalities","Number Patterns","Functions","Finance","Trigonometry","Geometry"], lessons:["Exponents & Surds","Linear & Quadratic Equations","Arithmetic & Geometric Sequences","Straight Line Graphs","Simple & Compound Interest","Trig Ratios","Euclidean Geometry"], notes:"<h3>Mathematics Grade 10</h3><p>FET phase mathematics begins here. Focus on algebra, functions, and introduction to trigonometry.</p><ul><li>Master exponent laws and surds</li><li>Understand linear and quadratic functions</li><li>Learn basic trigonometric ratios</li></ul>", exams:["Math Paper 1 June 2023","Math Paper 2 June 2023","Math Paper 1 Nov 2023","Math Paper 2 Nov 2023"] },
+      "Mathematical Literacy": { topics:["Numbers & Calculations","Patterns","Finance","Measurement","Maps","Data Handling"], lessons:["Basic Calculations","Pattern Recognition","Budgeting","Area & Volume","Scale Drawing","Basic Statistics"], notes:"<h3>Math Literacy Grade 10</h3><p>Practical mathematics for everyday life.</p>", exams:["Math Lit Exam 2023"] },
+      "Physical Sciences": { topics:["Mechanics","Waves","Matter & Materials","Chemical Change"], lessons:["Motion in One Dimension","Transverse Pulses","Classification of Matter","Physical & Chemical Change"], notes:"<h3>Physical Sciences Grade 10</h3><p>Introduction to physics and chemistry.</p>", exams:["Physics Paper 1 2023","Chemistry Paper 2 2023"] },
+      "Life Sciences": { topics:["Cells","Tissues","Support Systems","Transport Systems"], lessons:["Cell Structure","Plant & Animal Tissues","Skeleton & Muscles","Circulatory System"], notes:"<h3>Life Sciences Grade 10</h3><p>Biology fundamentals.</p>", exams:["Life Sciences Exam 2023"] },
+      "English HL": { topics:["Literature","Language","Writing"], lessons:["Shakespeare","Poetry Analysis","Transactional Writing"], notes:"<h3>English HL Grade 10</h3><p>Advanced literature study.</p>", exams:["English Paper 1 2023","English Paper 2 2023","English Paper 3 2023"] },
+      "History": { topics:["The World Around 1600","European Expansion","French Revolution","Industrial Revolution"], lessons:["Global Trade","Colonialism","Revolution in France","Industrialization"], notes:"<h3>History Grade 10</h3><p>World history from 1600s.</p>", exams:["History Exam 2023"] },
+      "Geography": { topics:["Map Skills","Climate","Geomorphology","Population"], lessons:["Map Reading","Climate Patterns","Rivers","Population Studies"], notes:"<h3>Geography Grade 10</h3><p>Physical and human geography.</p>", exams:["Geography Exam 2023"] },
+      "Accounting": { topics:["Bookkeeping","Financial Statements","Ethics"], lessons:["Source Documents","Journals","Trial Balance","Income Statement"], notes:"<h3>Accounting Grade 10</h3><p>Financial recording basics.</p>", exams:["Accounting Exam 2023"] },
+      "Business Studies": { topics:["Business Environments","Business Ventures","Business Roles"], lessons:["Micro Environment","Entrepreneurship","Social Responsibility"], notes:"<h3>Business Studies Grade 10</h3><p>Business fundamentals.</p>", exams:["Business Studies Exam 2023"] },
+      "Economics": { topics:["Basic Concepts","Microeconomics","Macroeconomics"], lessons:["Economic Systems","Demand & Supply","GDP & Economic Growth"], notes:"<h3>Economics Grade 10</h3><p>Economic principles and systems.</p>", exams:["Economics Exam 2023"] }
+    }
+  },
+  11: {
+    name: "Grade 11", desc: "FET Phase — Preparatory Year",
+    subjects: {
+      "Mathematics": { topics:["Exponents & Surds","Equations & Inequalities","Number Patterns","Analytical Geometry","Functions","Trigonometry","Measurement","Euclidean Geometry","Finance","Probability","Statistics"], lessons:["Rational Exponents","Quadratic Inequalities","Sigma Notation","Distance & Midpoint","Parabolas & Hyperbolas","Trig Identities","Surface Area & Volume","Circle Geometry","Compound Interest","Venn Diagrams","Standard Deviation"], notes:"<h3>Mathematics Grade 11</h3><p>Critical preparatory year for Grade 12. Focus on trigonometric identities, analytical geometry, and functions.</p>", exams:["Math Paper 1 June 2023","Math Paper 2 June 2023","Math Paper 1 Nov 2023","Math Paper 2 Nov 2023","Math Common Test 1","Math Common Test 2"] },
+      "Mathematical Literacy": { topics:["Numbers","Patterns","Finance","Measurement","Maps","Data","Probability"], lessons:["Ratio & Proportion","Linear Patterns","Income Tax","Time & Distance","Navigation","Data Interpretation","Probability Basics"], notes:"<h3>Math Literacy Grade 11</h3><p>Advanced practical mathematics.</p>", exams:["Math Lit Exam 2023"] },
+      "Physical Sciences": { topics:["Vectors","Newton Laws","Atomic Combinations","Magnetism","Electrostatics","Chemical Change"], lessons:["Vector Addition","Newton First Law","Chemical Bonding","Magnetic Fields","Coulomb Law","Stoichiometry"], notes:"<h3>Physical Sciences Grade 11</h3><p>Advanced physics and chemistry concepts.</p>", exams:["Physics Paper 1 2023","Chemistry Paper 2 2023"] },
+      "Life Sciences": { topics:["Biodiversity","Plant & Animal Cells","Plant Physiology","Human Physiology","Evolution"], lessons:["Classification Systems","Cell Division","Photosynthesis","Human Reproduction","Natural Selection"], notes:"<h3>Life Sciences Grade 11</h3><p>Advanced biology concepts.</p>", exams:["Life Sciences Paper 1 2023","Life Sciences Paper 2 2023"] },
+      "English HL": { topics:["Literature","Language","Writing","Oral"], lessons:["Novel Study","Drama Study","Poetry Study","Creative Writing","Prepared Speech"], notes:"<h3>English HL Grade 11</h3><p>Preparation for Grade 12 literature.</p>", exams:["English Paper 1 2023","English Paper 2 2023","English Paper 3 2023"] },
+      "History": { topics:["Communism","Capitalism","Apartheid","Cold War"], lessons:["Rise of Communism","Capitalist Economics","Apartheid Policies","Cold War Tensions"], notes:"<h3>History Grade 11</h3><p>20th century history and South African history.</p>", exams:["History Paper 1 2023","History Paper 2 2023"] },
+      "Geography": { topics:["Geomorphology","Climatology","Population","Economic Geography"], lessons:["Drainage Basins","Mid-latitude Cyclones","Population Structure","Economic Sectors"], notes:"<h3>Geography Grade 11</h3><p>Advanced physical and human geography.</p>", exams:["Geography Paper 1 2023","Geography Paper 2 2023"] },
+      "Accounting": { topics:["Bookkeeping","Financial Statements","Cost Accounting","Budgeting"], lessons:["Subsidiary Journals","Financial Statements","Manufacturing","Cash Budget"], notes:"<h3>Accounting Grade 11</h3><p>Advanced financial accounting.</p>", exams:["Accounting Exam 2023"] },
+      "Business Studies": { topics:["Business Environments","Business Ventures","Business Roles","Operations"], lessons:["Market Environment","Investment","Quality Control","Production"], notes:"<h3>Business Studies Grade 11</h3><p>Advanced business concepts.</p>", exams:["Business Studies Exam 2023"] },
+      "Economics": { topics:["Microeconomics","Macroeconomics","Economic Pursuits","Contemporary Issues"], lessons:["Perfect Competition","Monetary Policy","Growth & Development","Globalization"], notes:"<h3>Economics Grade 11</h3><p>Advanced economic theory.</p>", exams:["Economics Paper 1 2023","Economics Paper 2 2023"] }
+    }
+  },
+  12: {
+    name: "Grade 12 (Matric)", desc: "FET Phase — Final Year",
+    subjects: {
+      "Mathematics": { topics:["Sequences & Series","Functions","Finance","Trigonometry","Polynomials","Differential Calculus","Analytical Geometry","Euclidean Geometry","Statistics","Counting & Probability"], lessons:["Arithmetic & Geometric Series","Logarithmic Functions","Annuities","Compound & Double Angles","Remainder & Factor Theorem","Limits & Derivatives","Circles & Tangents","Proportionality","Regression","Counting Principles"], notes:"<h3>Mathematics Grade 12</h3><p>Matric final year. All topics are examinable in the final NSC examination.</p><ul><li>Sequences and series: arithmetic, geometric, sigma notation</li><li>Functions: logarithms, inverses, transformations</li><li>Finance: annuities, sinking funds, present value</li><li>Trigonometry: compound angles, double angles, general solutions</li><li>Calculus: limits, derivatives, applications</li></ul>", exams:["Math Paper 1 Feb/March 2023","Math Paper 2 Feb/March 2023","Math Paper 1 May/June 2023","Math Paper 2 May/June 2023","Math Paper 1 November 2023","Math Paper 2 November 2023"] },
+      "Mathematical Literacy": { topics:["Numbers","Patterns","Finance","Measurement","Maps","Data","Probability"], lessons:["Complex Calculations","Non-linear Patterns","Loans & Investments","Complex Measurement","Complex Maps","Data Analysis","Independent Events"], notes:"<h3>Math Literacy Grade 12</h3><p>Matric level practical mathematics.</p>", exams:["Math Lit Paper 1 2023","Math Lit Paper 2 2023"] },
+      "Physical Sciences": { topics:["Momentum","Work & Energy","Doppler Effect","Electrostatics","Electric Circuits","Electromagnetism","Organic Chemistry","Chemical Equilibrium"], lessons:["Conservation of Momentum","Work-Energy Theorem","Doppler Effect","Electric Fields","Ohm Law","Faraday Law","Organic Reactions","Le Chatelier Principle"], notes:"<h3>Physical Sciences Grade 12</h3><p>Matric physics and chemistry.</p>", exams:["Physics Paper 1 2023","Chemistry Paper 2 2023"] },
+      "Life Sciences": { topics:["DNA & RNA","Meiosis","Genetics","Human Evolution","Human Reproduction","Nervous System","Endocrine System","Homeostasis","Ecosystems","Human Impact"], lessons:["DNA Replication","Meiosis Process","Mendelian Genetics","Human Ancestry","Menstrual Cycle","Neuron Structure","Hormone Regulation","Temperature Regulation","Energy Flow","Environmental Issues"], notes:"<h3>Life Sciences Grade 12</h3><p>Matric biology covering genetics, evolution, human physiology, and environmental science.</p>", exams:["Life Sciences Paper 1 2023","Life Sciences Paper 2 2023"] },
+      "English HL": { topics:["Literature","Language","Writing","Oral"], lessons:["Novel Study","Drama Study","Poetry Study","Essay Writing","Prepared Speech"], notes:"<h3>English HL Grade 12</h3><p>Matric English Home Language.</p>", exams:["English Paper 1 2023","English Paper 2 2023","English Paper 3 2023"] },
+      "History": { topics:["Civil Society Protests","Independence in Africa","Cold War","Apartheid","Post-Apartheid"], lessons:["Civil Rights Movement","African Independence","Cuban Missile Crisis","Apartheid Resistance","Truth & Reconciliation"], notes:"<h3>History Grade 12</h3><p>Matric history focusing on South African and world history.</p>", exams:["History Paper 1 2023","History Paper 2 2023"] },
+      "Geography": { topics:["Geomorphology","Climatology","Rural & Urban Settlement","Economic Geography","GIS"], lessons:["Fluvial Processes","Tropical Cyclones","Urban Settlement","Development","GIS Applications"], notes:"<h3>Geography Grade 12</h3><p>Matric geography.</p>", exams:["Geography Paper 1 2023","Geography Paper 2 2023"] },
+      "Accounting": { topics:["Bookkeeping","Financial Statements","Cost Accounting","Budgeting","Inventory","Fixed Assets"], lessons:["Ledgers","Financial Statements","Manufacturing","Cash Flow","Inventory Valuation","Asset Disposal"], notes:"<h3>Accounting Grade 12</h3><p>Matric accounting.</p>", exams:["Accounting Exam 2023"] },
+      "Business Studies": { topics:["Business Environments","Business Ventures","Business Roles","Operations","Quality","Transformation"], lessons:["PESTLE Analysis","Investment","Leadership","Production Planning","TQM","BEE"], notes:"<h3>Business Studies Grade 12</h3><p>Matric business studies.</p>", exams:["Business Studies Exam 2023"] },
+      "Economics": { topics:["Microeconomics","Macroeconomics","Economic Indicators","International Trade","Development"], lessons:["Market Structures","Fiscal Policy","Economic Indicators","Exchange Rates","Development Strategies"], notes:"<h3>Economics Grade 12</h3><p>Matric economics.</p>", exams:["Economics Paper 1 2023","Economics Paper 2 2023"] }
+    }
+  }
+};
+const universityData = {
+  faculties: [
+    { name: "Engineering & Built Environment", color: "eng", desc: "Civil, Mechanical, Electrical, Chemical Engineering", courses: ["Civil Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Industrial Engineering","Mining Engineering","Aeronautical Engineering","Biomedical Engineering"] },
+    { name: "Science & Agriculture", color: "sci", desc: "Mathematics, Physics, Chemistry, Biology, Agriculture", courses: ["Mathematics & Applied Maths","Physics & Astronomy","Chemistry & Biochemistry","Biological Sciences","Computer Science","IT & Data Science","Agricultural Science","Environmental Science","Geology","Statistics"] },
+    { name: "Health Sciences", color: "med", desc: "Medicine, Nursing, Pharmacy, Dentistry", courses: ["Medicine & Surgery (MBChB)","Nursing Science","Pharmacy","Dentistry","Physiotherapy","Occupational Therapy","Radiography","Dietetics","Biokinetics","Veterinary Science"] },
+    { name: "Law & Humanities", color: "law", desc: "Law, Languages, Philosophy, Arts", courses: ["LLB (Law Degree)","BA Languages","Philosophy & Ethics","Political Science","Sociology","Psychology","Anthropology","Criminology","International Relations","Public Administration"] },
+    { name: "Commerce & Management", color: "bus", desc: "Accounting, Finance, Economics, Business", courses: ["BCom Accounting (CA Stream)","BCom Finance","BCom Economics","BCom Business Management","BCom Marketing","BCom Human Resources","BCom Supply Chain","BCom Information Systems","BCom Tourism","BCom Entrepreneurship"] },
+    { name: "Arts & Design", color: "art", desc: "Fine Arts, Drama, Music, Design, Architecture", courses: ["Fine Arts & Visual Arts","Drama & Theatre Arts","Music & Musicology","Film & Television","Graphic Design","Fashion Design","Interior Design","Architecture","Dance","Creative Writing"] }
+  ]
+};
+const subjectImages = {"Mathematics": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Euclid.jpg/440px-Euclid.jpg", "topics": {"Whole Numbers": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Number_line.svg/640px-Number_line.svg.png", "Integers": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Number-line.svg/640px-Number-line.svg.png", "Exponents": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Exponentiation_by_squaring.svg/640px-Exponentiation_by_squaring.svg.png", "Patterns": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Fibonacci_spiral.svg/640px-Fibonacci_spiral.svg.png", "Functions": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Function_x%5E2.svg/640px-Function_x%5E2.svg.png", "Algebra": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Quadratic_formula.svg/640px-Quadratic_formula.svg.png", "Geometry": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Pythagorean.svg/640px-Pythagorean.svg.png", "Number Patterns": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Arithmetic_progression.svg/640px-Arithmetic_progression.svg.png", "Transformation Geometry": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Reflection_geometry.svg/640px-Reflection_geometry.svg.png", "Data Handling": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Bar_chart.svg/640px-Bar_chart.svg.png", "Equations & Inequalities": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Inequality1.svg/640px-Inequality1.svg.png", "Analytical Geometry": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian_coordinates_2D.svg/640px-Cartesian_coordinates_2D.svg.png", "Trigonometry": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Unit_circle_angles_color.svg/640px-Unit_circle_angles_color.svg.png", "Measurement": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pi_eq_C_over_d.svg/640px-Pi_eq_C_over_d.svg.png", "Euclidean Geometry": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Euclid-proof.svg/640px-Euclid-proof.svg.png", "Finance": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Compound_interest.svg/640px-Compound_interest.svg.png", "Probability": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Dice-6.svg/640px-Dice-6.svg.png", "Statistics": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Normal_Distribution_PDF.svg/640px-Normal_Distribution_PDF.svg.png", "Sequences & Series": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Geometric_series.svg/640px-Geometric_series.svg.png", "Polynomials": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Polynomialdeg3.svg/640px-Polynomialdeg3.svg.png", "Differential Calculus": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Tangent_to_a_curve.svg/640px-Tangent_to_a_curve.svg.png", "Counting & Probability": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Venn_A_intersect_B.svg/640px-Venn_A_intersect_B.svg.png"}}, "Natural Sciences": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Periodic_table_large.svg/640px-Periodic_table_large.svg.png", "topics": {"Matter & Materials": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Phase_diagram_of_water.svg/640px-Phase_diagram_of_water.svg.png", "Energy & Change": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Energy_transformations.svg/640px-Energy_transformations.svg.png", "Planet Earth & Beyond": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg", "Life & Living": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tree_of_life.svg/640px-Tree_of_life.svg.png", "Atoms": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Stylised_atom_with_three_Bohr_model_orbits_and_stylised_nucleus.svg/640px-Stylised_atom_with_three_Bohr_model_orbits_and_stylised_nucleus.svg.png", "Electricity": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Ohm%27s_Law_with_Voltage_source.svg/640px-Ohm%27s_Law_with_Voltage_source.svg.png", "Earth Systems": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Earth_layers.svg/640px-Earth_layers.svg.png", "Human Body Systems": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png"}}, "Physical Sciences": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Periodic_table_large.svg/640px-Periodic_table_large.svg.png", "topics": {"Mechanics": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Newton%27s_cradle_animation_book_2.gif/440px-Newton%27s_cradle_animation_book_2.gif", "Waves": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Sine_wave_amplitude.svg/640px-Sine_wave_amplitude.svg.png", "Matter & Materials": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Phase_diagram_of_water.svg/640px-Phase_diagram_of_water.svg.png", "Chemical Change": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Chemical_reaction.svg/640px-Chemical_reaction.svg.png", "Vectors": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Vector_addition.svg/640px-Vector_addition.svg.png", "Newton Laws": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Newton%27s_cradle_animation_book_2.gif/440px-Newton%27s_cradle_animation_book_2.gif", "Atomic Combinations": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Stylised_atom_with_three_Bohr_model_orbits_and_stylised_nucleus.svg/640px-Stylised_atom_with_three_Bohr_model_orbits_and_stylised_nucleus.svg.png", "Magnetism": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Magnetic_field_of_bar_magnets.svg/640px-Magnetic_field_of_bar_magnets.svg.png", "Electrostatics": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Ohm%27s_Law_with_Voltage_source.svg/640px-Ohm%27s_Law_with_Voltage_source.svg.png", "Momentum": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Newton%27s_cradle_animation_book_2.gif/440px-Newton%27s_cradle_animation_book_2.gif", "Work & Energy": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Energy_transformations.svg/640px-Energy_transformations.svg.png", "Doppler Effect": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Sine_wave_amplitude.svg/640px-Sine_wave_amplitude.svg.png", "Electric Circuits": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Ohm%27s_Law_with_Voltage_source.svg/640px-Ohm%27s_Law_with_Voltage_source.svg.png", "Electromagnetism": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Magnetic_field_of_bar_magnets.svg/640px-Magnetic_field_of_bar_magnets.svg.png", "Organic Chemistry": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Benzene-2D-full.svg/640px-Benzene-2D-full.svg.png", "Chemical Equilibrium": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Chemical_reaction.svg/640px-Chemical_reaction.svg.png"}}, "Life Sciences": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tree_of_life.svg/640px-Tree_of_life.svg.png", "topics": {"Cells": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Animal_cell_structure_en.svg/640px-Animal_cell_structure_en.svg.png", "Tissues": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Animal_cell_structure_en.svg/640px-Animal_cell_structure_en.svg.png", "Support Systems": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Transport Systems": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Biodiversity": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tree_of_life.svg/640px-Tree_of_life.svg.png", "Plant & Animal Cells": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Animal_cell_structure_en.svg/640px-Animal_cell_structure_en.svg.png", "Plant Physiology": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Photosynthesis_equation.svg/640px-Photosynthesis_equation.svg.png", "Human Physiology": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Evolution": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tree_of_life.svg/640px-Tree_of_life.svg.png", "DNA & RNA": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/DNA_double_helix_horizontal.svg/640px-DNA_double_helix_horizontal.svg.png", "Meiosis": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Animal_cell_structure_en.svg/640px-Animal_cell_structure_en.svg.png", "Genetics": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/DNA_double_helix_horizontal.svg/640px-DNA_double_helix_horizontal.svg.png", "Human Evolution": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tree_of_life.svg/640px-Tree_of_life.svg.png", "Human Reproduction": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Nervous System": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Endocrine System": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Homeostasis": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Ecosystems": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tree_of_life.svg/640px-Tree_of_life.svg.png", "Human Impact": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg"}}, "Social Sciences": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "topics": {"History": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Geography": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/South_Africa_%28orthographic_projection%29.svg/640px-South_Africa_%28orthographic_projection%29.svg.png", "World War": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/World_War_II_1939.svg/640px-World_War_II_1939.svg.png", "Democracy": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Economic Systems": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "The World Around 1600": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/World_map_1600.svg/640px-World_map_1600.svg.png", "European Expansion": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/World_map_1600.svg/640px-World_map_1600.svg.png", "French Revolution": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Prise_de_la_Bastille.jpg/640px-Prise_de_la_Bastille.jpg", "Industrial Revolution": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Power_loom_weaving_in_1835.jpg/640px-Power_loom_weaving_in_1835.jpg", "Communism": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_the_Soviet_Union.svg/640px-Flag_of_the_Soviet_Union.svg.png", "Capitalism": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Apartheid": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Cold War": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_the_Soviet_Union.svg/640px-Flag_of_the_Soviet_Union.svg.png", "Civil Society Protests": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Independence in Africa": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Post-Apartheid": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png"}}, "English HL": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/440px-Shakespeare.jpg", "topics": {"Literature": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/440px-Shakespeare.jpg", "Language": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/English_language.svg/640px-English_language.svg.png", "Writing": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/English_language.svg/640px-English_language.svg.png", "Novel Study": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/440px-Shakespeare.jpg", "Drama": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/440px-Shakespeare.jpg", "Poetry": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/440px-Shakespeare.jpg", "Oral": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/English_language.svg/640px-English_language.svg.png"}}, "Technology": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Engineering_design_process.svg/640px-Engineering_design_process.svg.png", "topics": {"Design Process": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Engineering_design_process.svg/640px-Engineering_design_process.svg.png", "Systems and Control": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Ohm%27s_Law_with_Voltage_source.svg/640px-Ohm%27s_Law_with_Voltage_source.svg.png"}}, "Mathematical Literacy": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Number_line.svg/640px-Number_line.svg.png", "topics": {"Numbers & Calculations": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Number_line.svg/640px-Number_line.svg.png", "Patterns": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Fibonacci_spiral.svg/640px-Fibonacci_spiral.svg.png", "Finance": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Compound_interest.svg/640px-Compound_interest.svg.png", "Measurement": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pi_eq_C_over_d.svg/640px-Pi_eq_C_over_d.svg.png", "Maps": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/South_Africa_%28orthographic_projection%29.svg/640px-South_Africa_%28orthographic_projection%29.svg.png", "Data Handling": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Bar_chart.svg/640px-Bar_chart.svg.png", "Probability": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Dice-6.svg/640px-Dice-6.svg.png"}}, "History": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "topics": {"The World Around 1600": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/World_map_1600.svg/640px-World_map_1600.svg.png", "European Expansion": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/World_map_1600.svg/640px-World_map_1600.svg.png", "French Revolution": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Prise_de_la_Bastille.jpg/640px-Prise_de_la_Bastille.jpg", "Industrial Revolution": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Power_loom_weaving_in_1835.jpg/640px-Power_loom_weaving_in_1835.jpg", "Communism": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_the_Soviet_Union.svg/640px-Flag_of_the_Soviet_Union.svg.png", "Capitalism": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Apartheid": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Cold War": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_the_Soviet_Union.svg/640px-Flag_of_the_Soviet_Union.svg.png", "Civil Society Protests": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Independence in Africa": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png", "Post-Apartheid": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png"}}, "Geography": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/South_Africa_%28orthographic_projection%29.svg/640px-South_Africa_%28orthographic_projection%29.svg.png", "topics": {"Map Skills": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/South_Africa_%28orthographic_projection%29.svg/640px-South_Africa_%28orthographic_projection%29.svg.png", "Climate": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg", "Geomorphology": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Earth_layers.svg/640px-Earth_layers.svg.png", "Population": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg", "Climatology": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg", "Economic Geography": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Rural & Urban Settlement": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/South_Africa_%28orthographic_projection%29.svg/640px-South_Africa_%28orthographic_projection%29.svg.png", "GIS": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/South_Africa_%28orthographic_projection%29.svg/640px-South_Africa_%28orthographic_projection%29.svg.png"}}, "Accounting": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Accounting.svg/640px-Accounting.svg.png", "topics": {"Bookkeeping": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Accounting.svg/640px-Accounting.svg.png", "Financial Statements": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Accounting.svg/640px-Accounting.svg.png", "Ethics": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Accounting.svg/640px-Accounting.svg.png", "Cost Accounting": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Accounting.svg/640px-Accounting.svg.png", "Budgeting": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Compound_interest.svg/640px-Compound_interest.svg.png", "Inventory": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Accounting.svg/640px-Accounting.svg.png", "Fixed Assets": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Accounting.svg/640px-Accounting.svg.png"}}, "Business Studies": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "topics": {"Business Environments": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Business Ventures": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Business Roles": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Operations": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Engineering_design_process.svg/640px-Engineering_design_process.svg.png", "Quality": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Engineering_design_process.svg/640px-Engineering_design_process.svg.png", "Transformation": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/640px-Flag_of_South_Africa.svg.png"}}, "Economics": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "topics": {"Basic Concepts": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Microeconomics": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Macroeconomics": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Economic Pursuits": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Contemporary Issues": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg", "Economic Indicators": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Bar_chart.svg/640px-Bar_chart.svg.png", "International Trade": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg", "Development": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/640px-The_Earth_seen_from_Apollo_17.jpg"}}, "Economic Management Sciences": {"subject": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "topics": {"Financial Literacy": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Compound_interest.svg/640px-Compound_interest.svg.png", "Entrepreneurship": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png"}}};
+const facultyImages = {"Engineering & Built Environment": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Engineering_design_process.svg/640px-Engineering_design_process.svg.png", "Science & Agriculture": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Periodic_table_large.svg/640px-Periodic_table_large.svg.png", "Health Sciences": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Human_body_diagram.svg/640px-Human_body_diagram.svg.png", "Law & Humanities": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/440px-Shakespeare.jpg", "Commerce & Management": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Economic_systems.svg/640px-Economic_systems.svg.png", "Arts & Design": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/640px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"};
+
+// ===================================================================================
+// BACKEND_URL — set this ONCE to your deployed ENLIGHT TUTOR backend (see /backend
+// folder: FastAPI + freeflow-llm) before deploying this HTML file. All AI generation,
+// lesson notes, and video lookups go through it. Groq / Gemini / GitHub Models /
+// YouTube Data API keys live ONLY on that backend — students never see or enter a key.
+// Example: "https://enlight-backend.up.railway.app"
+// ===================================================================================
+const BACKEND_URL = "https://your-backend-url.example.com".replace(/\/$/, "");
+// Optional personal AI key. The backend (with your payment gate) is always tried FIRST.
+// This is only used as a fallback if the backend is unreachable, or if the backend says
+// payment is required and the person has supplied their own key — in that case they are
+// using their own Groq quota directly and are NOT going through your payment approval.
+const AI_URL = "https://api.groq.com/openai/v1/chat/completions";
+const AI_MODEL = "llama-3.3-70b-versatile";
+let apiKey = localStorage.getItem("enlight_api_key") || "";
+let authToken = localStorage.getItem("enlight_auth_token") || "";
+let currentUser = null;
+let authMode = "login";
+let chatHistory = [];
+let currentLessonGrade = null, currentLessonSubject = null, currentLessonTitle = null;
+let currentGrade = null, currentSubject = null, examTimer = null, examTime = 1800;
+let examAnswers = [];
+let examQuestions = [];
+const pageTitles = { home:"Home", university:"University", grades:"Grades 8-12", subjects:"Subjects", content:"Content", tutor:"AI Tutor", dashboard:"Dashboard", payment:"Subscription", admin:"Admin", exam:"Exam" };
+// ===== AUTH =====
+function toggleAuthMode(e) {
+  if (e) e.preventDefault();
+  authMode = authMode === "login" ? "signup" : "login";
+  document.getElementById("auth-mode-subtitle").textContent = authMode === "login" ? "Log in to continue" : "Create your account";
+  document.getElementById("auth-submit-btn").textContent = authMode === "login" ? "Log In" : "Sign Up";
+  document.getElementById("auth-toggle-text").textContent = authMode === "login" ? "Don't have an account?" : "Already have an account?";
+  document.getElementById("auth-toggle-link").textContent = authMode === "login" ? "Sign Up" : "Log In";
+  document.getElementById("auth-error").style.display = "none";
+  document.getElementById("auth-forgot-row").style.display = authMode === "login" ? "" : "none";
+}
+async function submitAuth() {
+  var email = document.getElementById("auth-email-input").value.trim();
+  var password = document.getElementById("auth-password-input").value;
+  var errEl = document.getElementById("auth-error");
+  errEl.style.display = "none";
+  if (!email || !password) { errEl.textContent = "Please enter both email and password."; errEl.style.display = "block"; return; }
+  if (!BACKEND_URL) { errEl.textContent = "This app isn't connected to its service yet. Please try again later."; errEl.style.display = "block"; return; }
+  var endpoint = authMode === "login" ? "/api/auth/login" : "/api/auth/signup";
+  var btn = document.getElementById("auth-submit-btn");
+  var originalText = btn.textContent;
+  btn.textContent = "Please wait...";
+  btn.disabled = true;
+  try {
+    var res = await fetch(BACKEND_URL + endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Something went wrong.");
+    authToken = data.token;
+    localStorage.setItem("enlight_auth_token", authToken);
+    currentUser = data;
+    onAuthSuccess();
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.style.display = "block";
+  } finally {
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+function onAuthSuccess() {
+  document.getElementById("auth-gate").classList.remove("active");
+  document.getElementById("nav-admin").style.display = (currentUser && currentUser.is_admin) ? "" : "none";
+  if (currentUser && !currentUser.has_access && !currentUser.is_admin && !currentUser.free_forever) {
+    showToast("Welcome! Please complete payment to unlock full access.", "info");
+    showSection("payment");
+  } else {
+    showToast("Welcome, " + currentUser.email + "!", "success");
+  }
+}
+async function checkAuth() {
+  if (!authToken || !BACKEND_URL) return false;
+  try {
+    var res = await fetch(BACKEND_URL + "/api/auth/me", { headers: { "Authorization": "Bearer " + authToken } });
+    if (!res.ok) throw new Error("invalid session");
+    currentUser = await res.json();
+    return true;
+  } catch (e) {
+    authToken = "";
+    localStorage.removeItem("enlight_auth_token");
+    return false;
+  }
+}
+function logout() {
+  var tokenToRevoke = authToken;
+  authToken = "";
+  currentUser = null;
+  localStorage.removeItem("enlight_auth_token");
+  document.getElementById("nav-admin").style.display = "none";
+  document.getElementById("auth-gate").classList.add("active");
+  showToast("Logged out", "info");
+  if (BACKEND_URL && tokenToRevoke) {
+    fetch(BACKEND_URL + "/api/auth/logout", { method: "POST", headers: { "Authorization": "Bearer " + tokenToRevoke } }).catch(function() {});
+  }
+}
+// ===== FORGOT / RESET PASSWORD =====
+function openForgotPassword(e) {
+  if (e) e.preventDefault();
+  document.getElementById("forgot-status-msg").textContent = "";
+  document.getElementById("forgot-email-input").value = document.getElementById("auth-email-input").value || "";
+  showModal("forgot-password");
+}
+async function submitForgotPassword() {
+  var email = document.getElementById("forgot-email-input").value.trim();
+  var statusMsg = document.getElementById("forgot-status-msg");
+  if (!email) { statusMsg.style.color = "var(--danger)"; statusMsg.textContent = "Please enter your email."; return; }
+  if (!BACKEND_URL) { statusMsg.style.color = "var(--danger)"; statusMsg.textContent = "This app isn't connected to its service yet."; return; }
+  statusMsg.style.color = "var(--text-muted)";
+  statusMsg.textContent = "Sending...";
+  try {
+    var res = await fetch(BACKEND_URL + "/api/auth/forgot-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email })
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Something went wrong.");
+    statusMsg.style.color = "var(--success)";
+    statusMsg.textContent = data.message || "If an account exists for this email, a reset link has been sent.";
+  } catch (e) {
+    statusMsg.style.color = "var(--danger)";
+    statusMsg.textContent = e.message;
+  }
+}
+var pendingResetToken = null;
+function checkForResetToken() {
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get("reset_token");
+  if (token) {
+    pendingResetToken = token;
+    document.getElementById("auth-gate").classList.remove("active");
+    document.getElementById("reset-password-modal").classList.add("active");
+    var url = new URL(window.location.href);
+    url.searchParams.delete("reset_token");
+    window.history.replaceState({}, document.title, url.toString());
+  }
+}
+async function submitResetPassword() {
+  var newPassword = document.getElementById("reset-new-password-input").value;
+  var statusMsg = document.getElementById("reset-status-msg");
+  statusMsg.style.display = "none";
+  if (!pendingResetToken) { return; }
+  if (!newPassword || newPassword.length < 6) {
+    statusMsg.textContent = "Password must be at least 6 characters.";
+    statusMsg.style.display = "block";
+    return;
+  }
+  try {
+    var res = await fetch(BACKEND_URL + "/api/auth/reset-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: pendingResetToken, new_password: newPassword })
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Couldn't reset your password.");
+    pendingResetToken = null;
+    document.getElementById("reset-password-modal").classList.remove("active");
+    document.getElementById("auth-gate").classList.add("active");
+    showToast("Password reset! Please log in with your new password.", "success");
+  } catch (e) {
+    statusMsg.textContent = e.message;
+    statusMsg.style.display = "block";
+  }
+}
+// ===== CHANGE PASSWORD / DEVICE SESSIONS (while logged in) =====
+async function submitChangePassword() {
+  var current = document.getElementById("change-current-password-input").value;
+  var newPw = document.getElementById("change-new-password-input").value;
+  var statusMsg = document.getElementById("change-password-status-msg");
+  if (!authToken) { showToast("Please log in first.", "error"); return; }
+  if (!current || !newPw) { statusMsg.style.color = "var(--danger)"; statusMsg.textContent = "Please fill in both fields."; return; }
+  statusMsg.style.color = "var(--text-muted)";
+  statusMsg.textContent = "Updating...";
+  try {
+    var res = await fetch(BACKEND_URL + "/api/auth/change-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + authToken },
+      body: JSON.stringify({ current_password: current, new_password: newPw })
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Couldn't change your password.");
+    statusMsg.style.color = "var(--success)";
+    statusMsg.textContent = "Password updated.";
+    document.getElementById("change-current-password-input").value = "";
+    document.getElementById("change-new-password-input").value = "";
+  } catch (e) {
+    statusMsg.style.color = "var(--danger)";
+    statusMsg.textContent = e.message;
+  }
+}
+async function logoutOtherDevices() {
+  if (!authToken) { showToast("Please log in first.", "error"); return; }
+  var statusMsg = document.getElementById("sessions-status-msg");
+  statusMsg.textContent = "Working...";
+  try {
+    var res = await fetch(BACKEND_URL + "/api/auth/logout-others", {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + authToken }
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Couldn't log out other devices.");
+    statusMsg.textContent = "Logged out of " + data.count + " other device(s). This device stays logged in.";
+    showToast("Other devices logged out", "success");
+  } catch (e) {
+    statusMsg.textContent = "";
+    showToast(e.message, "error");
+  }
+}
+// ===== OPTIONAL PERSONAL AI KEY =====
+function saveOwnApiKey() {
+  var key = document.getElementById("own-groq-key-input").value.trim();
+  var statusMsg = document.getElementById("own-key-status-msg");
+  if (!key) { statusMsg.style.color = "var(--danger)"; statusMsg.textContent = "Please enter a key, or use Remove Key to clear it."; return; }
+  apiKey = key;
+  localStorage.setItem("enlight_api_key", key);
+  statusMsg.style.color = "var(--success)";
+  statusMsg.textContent = "Saved. This key will be used automatically when needed.";
+  showToast("Personal API key saved", "success");
+}
+function clearOwnApiKey() {
+  apiKey = "";
+  localStorage.removeItem("enlight_api_key");
+  document.getElementById("own-groq-key-input").value = "";
+  var statusMsg = document.getElementById("own-key-status-msg");
+  statusMsg.style.color = "var(--text-muted)";
+  statusMsg.textContent = "Removed. AI features will go back to using our servers only.";
+  showToast("Personal API key removed", "info");
+}
+// ===== PAYMENT (manual bank transfer + proof of payment review) =====
+document.addEventListener("change", function(e) {
+  if (e.target && e.target.id === "payment-method-select") {
+    document.getElementById("payment-file-group").style.display = e.target.value === "upload" ? "" : "none";
+  }
+});
+async function submitPaymentProof() {
+  if (!authToken) { showToast("Please log in first.", "error"); return; }
+  var method = document.getElementById("payment-method-select").value;
+  var reference = document.getElementById("payment-reference-input").value.trim();
+  var fileInput = document.getElementById("payment-file-input");
+  var statusMsg = document.getElementById("payment-status-msg");
+  var fd = new FormData();
+  fd.append("method", method);
+  fd.append("reference", reference);
+  if (method === "upload" && fileInput.files[0]) fd.append("proof", fileInput.files[0]);
+  statusMsg.textContent = "Submitting...";
+  try {
+    var res = await fetch(BACKEND_URL + "/api/payment/submit", {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + authToken },
+      body: fd
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Submission failed.");
+    statusMsg.textContent = "Submitted! We'll review it and grant access shortly.";
+    showToast("Proof of payment submitted", "success");
+  } catch (e) {
+    statusMsg.textContent = "";
+    showToast(e.message, "error");
+  }
+}
+async function refreshAccessStatus() {
+  if (!authToken) return;
+  try {
+    var res = await fetch(BACKEND_URL + "/api/auth/me", { headers: { "Authorization": "Bearer " + authToken } });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Couldn't check status.");
+    currentUser = data;
+    if (currentUser.has_access || currentUser.is_admin || currentUser.free_forever) {
+      showToast("Access granted! Welcome to ENLIGHT RSA.", "success");
+      showSection("home");
+    } else {
+      showToast("Still pending review. Please check back soon.", "info");
+    }
+  } catch (e) {
+    showToast(e.message, "error");
+  }
+}
+// ===== ADMIN (creator-only: review + grant access) =====
+async function loadAdminPanel() {
+  var list = document.getElementById("admin-requests-list");
+  if (!currentUser || !currentUser.is_admin) { list.innerHTML = "<p>Admin access required.</p>"; return; }
+  list.innerHTML = '<div class="typing-indicator" style="padding:0;"><span></span><span></span><span></span></div>';
+  try {
+    var res = await fetch(BACKEND_URL + "/api/admin/payment-requests?status=pending", { headers: { "Authorization": "Bearer " + authToken } });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Couldn't load requests.");
+    if (!data.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><h3>No pending requests</h3></div>'; return; }
+    list.innerHTML = "";
+    data.forEach(function(r) {
+      var card = document.createElement("div");
+      card.className = "card";
+      card.style.marginBottom = "12px";
+      card.innerHTML =
+        '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">' +
+          '<div>' +
+            '<strong>' + r.email + '</strong><br>' +
+            '<span style="font-size:0.8rem;color:var(--text-muted);">Method: ' + r.method + (r.reference ? " — " + r.reference : "") + '</span><br>' +
+            '<span style="font-size:0.75rem;color:var(--text-muted);">' + new Date(r.created_at * 1000).toLocaleString() + '</span>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+            (r.has_proof ? '<a href="' + BACKEND_URL + '/api/admin/proof/' + r.id + '?token=' + encodeURIComponent(authToken) + '" target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><i class="fas fa-eye"></i> View Proof</a>' : '') +
+            '<button class="btn btn-primary btn-sm" onclick="grantAccess(' + r.id + ')"><i class="fas fa-check"></i> Grant Access</button>' +
+          '</div>' +
+        '</div>';
+      list.appendChild(card);
+    });
+  } catch (e) {
+    list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Error</h3><p>' + e.message + '</p></div>';
+  }
+}
+async function grantAccess(requestId) {
+  try {
+    var res = await fetch(BACKEND_URL + "/api/admin/grant-access", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + authToken },
+      body: JSON.stringify({ request_id: requestId })
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Failed to grant access.");
+    showToast("Access granted to " + data.email, "success");
+    loadAdminPanel();
+  } catch (e) {
+    showToast(e.message, "error");
+  }
+}
+// ===== INIT =====
+window.onload = async function() {
+  try {
+    var ownKeyInput = document.getElementById("own-groq-key-input");
+    if (ownKeyInput && apiKey) ownKeyInput.value = apiKey;
+    var hasResetToken = new URLSearchParams(window.location.search).get("reset_token");
+    var authed = await checkAuth();
+    initGrades();
+    initUniversity();
+    initDashboard();
+    if (hasResetToken) {
+      checkForResetToken();
+    } else if (authed) {
+      document.getElementById("auth-gate").classList.remove("active");
+      document.getElementById("nav-admin").style.display = (currentUser && currentUser.is_admin) ? "" : "none";
+      if (currentUser && !currentUser.has_access && !currentUser.is_admin && !currentUser.free_forever) {
+        showSection("payment");
+      }
+    } else {
+      document.getElementById("auth-gate").classList.add("active");
+    }
+  } catch(e) {
+    console.error("Init error:", e);
+  }
+  setTimeout(function() {
+    var loader = document.getElementById("loader");
+    if (loader) { loader.classList.add("hidden"); loader.style.display = "none"; }
+  }, 1200);
+};
+// Emergency fallback: hide loader after 3 seconds no matter what
+setTimeout(function() {
+  var loader = document.getElementById("loader");
+  if (loader) { loader.classList.add("hidden"); loader.style.display = "none"; }
+}, 3000);
+// ===== AI API =====
+// Default path: your Python backend (FastAPI + freeflow-llm), which holds the pooled
+// Groq / Gemini / GitHub Models keys server-side and enforces your payment gate.
+// Fallback path: if the person has entered their OWN Groq API key (Subscription page ->
+// Account Security -> "Your Own AI Key"), it's used directly when the backend is
+// unreachable or when the backend says payment is required — in that case they're using
+// their own Groq quota and are NOT going through your payment approval for that request.
+// Set BACKEND_URL once below before deploying this file.
+async function callDirectGroq(messages, temperature, maxTokens) {
+  if (!apiKey) return null;
+  try {
+    const res = await fetch(AI_URL, {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + apiKey, "Content-Type": "application/json" },
+      body: JSON.stringify({ model: AI_MODEL, messages: messages, temperature: temperature, max_tokens: maxTokens })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(function() { return {}; });
+      throw new Error(err.error && err.error.message ? err.error.message : "HTTP " + res.status);
+    }
+    const data = await res.json();
+    return data.choices[0].message.content;
+  } catch (e) {
+    showToast("Your personal API key failed: " + e.message, "error");
+    return null;
+  }
+}
+async function callAI(messages, temperature, maxTokens) {
+  temperature = temperature || 0.7;
+  maxTokens = maxTokens || 4000;
+  if (!BACKEND_URL) {
+    if (apiKey) return await callDirectGroq(messages, temperature, maxTokens);
+    console.error("ENLIGHT: BACKEND_URL is not configured in enlight_rsa.html — set it near the top of the <script> before deploying.");
+    showToast("This app isn't connected to its AI service yet. Please try again later.", "error");
+    return null;
+  }
+  try {
+    const res = await fetch(BACKEND_URL + "/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + authToken },
+      body: JSON.stringify({ messages: messages, temperature: temperature, max_tokens: maxTokens })
+    });
+    const data = await res.json();
+    if (res.status === 401) { logout(); showToast("Your session expired — please log in again.", "error"); return null; }
+    if (res.status === 402) {
+      if (apiKey) { showToast("Using your personal API key instead of the paid service.", "info"); return await callDirectGroq(messages, temperature, maxTokens); }
+      showSection("payment"); showToast("Please complete payment to unlock this feature.", "error"); return null;
+    }
+    if (!res.ok) throw new Error(data.detail || ("HTTP " + res.status));
+    return data.reply;
+  } catch (e) {
+    if (apiKey) { showToast("Backend unreachable — using your personal API key instead.", "info"); return await callDirectGroq(messages, temperature, maxTokens); }
+    showToast("Couldn't reach the AI service — please try again in a moment.", "error");
+    console.error("callAI backend error:", e.message);
+    return null;
+  }
+}
+function cacheKey(type, grade, subject, topic) {
+  return "enlight_cache_" + type + "_" + String(grade).replace(/\s/g,"_") + "_" + subject.replace(/\s/g,"_") + "_" + topic.replace(/\s/g,"_");
+}
+// ===== LESSON GENERATION =====
+async function generateLessonContent(grade, subject, lessonTitle) {
+  var key = cacheKey("lesson", grade, subject, lessonTitle);
+  var cached = localStorage.getItem(key);
+  if (cached) return cached;
+  var level = "Grade " + grade + " CAPS";
+  // Find topic image
+  var topicImg = "";
+  if (subjectImages[subject] && subjectImages[subject].topics) {
+    Object.keys(subjectImages[subject].topics).forEach(function(t) {
+      if (lessonTitle.toLowerCase().indexOf(t.toLowerCase()) !== -1 || t.toLowerCase().indexOf(lessonTitle.toLowerCase()) !== -1) {
+        topicImg = subjectImages[subject].topics[t];
+      }
+    });
+  }
+  var imgPrefix = topicImg ? '<div class="lesson-topic-img"><img src="' + topicImg + '" alt="' + lessonTitle + '" onerror="this.style.display=\'none\'"></div>' : "";
+  var prompt = `Generate a comprehensive, DETAILED ${level} lesson for the subject "${subject}" on the topic: "${lessonTitle}".
+
+DEPTH REQUIREMENT — this is not a summary, it is a full teaching lesson:
+- Do NOT write a brief overview. Expand every section fully. Assume the student has never seen
+  this topic before and needs everything explained from first principles up to exam-ready mastery.
+- The lesson MUST include ALL of the following sections, in this order, and none may be skipped:
+  1. <h2>Topic Name</h2>
+  2. <h3>Key Concepts</h3> — every core idea in this topic, each explained in its own paragraph.
+  3. <h3>Definitions</h3> — every relevant term/law, each in its own <blockquote>, explained in
+     plain language immediately after it.
+  4. <h3>What It Means</h3> — the intuitive, plain-language explanation.
+  5. <h3>Key Formula(s)</h3> (if applicable) — each in its own <div class="formula-box">, with
+     every symbol/variable explained.
+  6. <h3>Critical Things to Observe</h3> — common mistakes, easily-confused cases, conditions
+     that must hold, and exam pitfalls — specific and exhaustive, not generic advice.
+  7. <h3>Worked Examples</h3> — at least 2 full worked examples of increasing difficulty, each in
+     <div class="example-box"> with <h4>Problem:</h4> and <h4>Solution:</h4>, fully step-by-step.
+  8. <h3>Real-World Examples</h3> (where relevant).
+  9. <h3>Summary</h3> — a genuine recap (the only place a condensed list is appropriate).
+
+MATHEMATICAL NOTATION — strictly enforced:
+- Powers MUST use real superscript characters: x², x³, x⁴, aⁿ. NEVER write x^2 or x**2.
+- Use brackets only where mathematically required for grouping (e.g. "2(x + 3)" is correct).
+- Use × for multiplication and ÷ for division in formulas where appropriate.
+
+STRICT FORMATTING RULES:
+
+1. Use <h3> for the required sections above, <h4> for subsections within them.
+2. Use <blockquote> for important definitions or laws
+3. Use <div class="formula-box"> for mathematical formulas and equations
+4. Use <div class="key-point"> for critical takeaways
+5. Use <div class="example-box"> for worked examples, with <h4>Problem:</h4> and <h4>Solution:</h4> inside
+6. Use <table> with <thead> and <tbody> for comparison tables, conditions, or summaries
+7. Use <ul> with plain list items (no custom bullets — CSS handles styling)
+8. Use <strong> for emphasis on key terms
+9. Use <code> for units, variables, and short formulas inline
+10. Use <hr> to separate major sections
+11. Include step-by-step numbered solutions for worked examples
+
+Example structure:
+<h2>Conservation of Momentum</h2>
+<h3>Key Concepts</h3>
+<p>Full paragraph explanation of each core idea...</p>
+<h3>Definitions</h3>
+<blockquote>The total momentum of an isolated system remains constant if no external net force acts on it.</blockquote>
+<p>Plain-language explanation of the definition...</p>
+<h3>What It Means</h3>
+<p>Explanation text...</p>
+<h3>Key Formula(s)</h3>
+<div class="formula-box">p = mv</div>
+<p>Where:</p>
+<ul>
+<li><strong>p</strong> = momentum (vector, units: <code>kg·m/s</code>)</li>
+<li><strong>m</strong> = mass (<code>kg</code>)</li>
+<li><strong>v</strong> = velocity (<code>m/s</code>)</li>
+</ul>
+<h3>Critical Things to Observe</h3>
+<div class="key-point">Momentum is only conserved if the system is isolated — no external net force.</div>
+<h3>Worked Examples</h3>
+<div class="example-box">
+<h4>Problem:</h4>
+<p>A 2 kg ball moving at 3 m/s collides with a stationary 4 kg ball...</p>
+<h4>Solution:</h4>
+<p>Step 1: Calculate initial momentum...</p>
+<p>Step 2: Apply conservation law...</p>
+</div>
+<h3>Summary</h3>
+<table>
+<thead><tr><th>Condition</th><th>Momentum Conserved?</th></tr></thead>
+<tbody>
+<tr><td>No external forces</td><td>Yes</td></tr>
+<tr><td>External forces present</td><td>No</td></tr>
+</tbody>
+</table>
+
+Make it educational, accurate, and strictly aligned with South African CAPS curriculum standards. Do NOT include <html>, <head>, or <body> tags.`;
+  var content = null;
+  if (BACKEND_URL) {
+    try {
+      var res = await fetch(BACKEND_URL + "/api/lesson-notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + authToken },
+        body: JSON.stringify({ grade: String(grade), subject: subject, lesson: lessonTitle })
+      });
+      var data = await res.json();
+      if (res.status === 401) { logout(); showToast("Your session expired — please log in again.", "error"); return null; }
+      if (res.status === 402) {
+        if (!apiKey) { showSection("payment"); showToast("Please complete payment to unlock lesson notes.", "error"); return null; }
+        // apiKey is set — fall through to the callAI(...) fallback below, which will use it directly.
+      } else if (!res.ok) {
+        throw new Error(data.detail || ("HTTP " + res.status));
+      } else {
+        content = data.html;
+      }
+    } catch (e) {
+      console.warn("Backend lesson-notes failed, falling back to /api/chat:", e.message);
+    }
+  }
+  if (!content) {
+    content = await callAI([
+      {role: "system", content: "You are ENLIGHTQUANTS AI, an elite South African curriculum developer and senior professor with reasoning capabilities exceeding standard AI models. You create rigorous, comprehensive educational content strictly aligned with CAPS standards. Think step-by-step, anticipate student misconceptions, provide nuanced explanations, and structure responses with academic depth. Use precise terminology, rich examples, and scaffolded complexity."},
+      {role: "user", content: prompt}
+    ], 0.4, 6000);
+  }
+  if (content) {
+    content = imgPrefix + content;
+    localStorage.setItem(key, content);
+  }
+  return content;
+}
+async function generateUniversityLesson(faculty, course) {
+  var key = cacheKey("uni", "uni", faculty, course);
+  var cached = localStorage.getItem(key);
+  if (cached) return cached;
+  var prompt = `Generate a comprehensive university-level introductory module for the course "${course}" within the faculty "${faculty}" at a South African university.
+
+STRICT FORMATTING RULES:
+1. Start with <h2>Course Name</h2>
+2. Use <h3> for major sections (Course Overview, Learning Outcomes, Core Content, Practical Applications, Assessment Preparation, etc.)
+3. Use <h4> for subsections
+4. Use <blockquote> for key definitions or principles
+5. Use <div class="formula-box"> for formulas and equations
+6. Use <div class="key-point"> for critical concepts
+7. Use <div class="example-box"> for case studies with <h4>Case Study:</h4> and <h4>Analysis:</h4>
+8. Use <table> for comparison tables, assessment breakdowns, or resource lists
+9. Use <ul> with plain list items
+10. Use <strong> for emphasis, <code> for technical terms
+11. Use <hr> between major sections
+
+Format using HTML tags. Do NOT include <html>, <head>, or <body> tags. Content should be rigorous and academically accurate.`;
+  var content = await callAI([
+    {role: "system", content: "You are ENLIGHTQUANTS AI, a distinguished South African university professor and curriculum architect with research-level expertise. You create rigorous, publication-quality academic content for university-level courses. Think deeply, synthesize interdisciplinary connections, and present material with scholarly precision. Include critical thinking prompts and advanced applications."},
+    {role: "user", content: prompt}
+  ], 0.5, 4000);
+  if (content) localStorage.setItem(key, content);
+  return content;
+}
+// ===== NAVIGATION =====
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(function(s) { s.classList.remove("active"); });
+  var el = document.getElementById(id);
+  if (el) el.classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(function(a) { a.classList.remove("active"); });
+  document.querySelectorAll(".mobile-nav-item").forEach(function(a) { a.classList.remove("active"); });
+  var nav = document.getElementById("nav-" + id);
+  if (nav) nav.classList.add("active");
+  var mob = document.getElementById("mob-" + id);
+  if (mob) mob.classList.add("active");
+  document.getElementById("page-title").textContent = pageTitles[id] || id;
+  var content = document.querySelector(".content");
+  if (content) content.scrollTop = 0;
+}
+// ===== TOAST =====
+function showToast(message, type) {
+  var container = document.getElementById("toast-container");
+  var toast = document.createElement("div");
+  toast.className = "toast " + type;
+  var icon = type === "success" ? "fa-check-circle" : type === "error" ? "fa-exclamation-circle" : "fa-info-circle";
+  toast.innerHTML = '<i class="fas ' + icon + '"></i><span>' + message + '</span>';
+  container.appendChild(toast);
+  setTimeout(function() {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(100%)";
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 3000);
+}
+// ===== MODALS =====
+function showModal(type) {
+  document.getElementById(type + "-modal").classList.add("active");
+}
+function closeModal(type) {
+  document.getElementById(type + "-modal").classList.remove("active");
+  if (type === "video") document.getElementById("video-iframe").src = "";
+}
+function switchModal(from, to) { closeModal(from); showModal(to); }
+document.querySelectorAll(".modal-overlay").forEach(function(o) {
+  o.addEventListener("click", function(e) {
+    if (e.target === this) {
+      this.classList.remove("active");
+      if (this.id === "video-modal") document.getElementById("video-iframe").src = "";
+    }
+  });
+});
+// ===== GRADES =====
+function initGrades() {
+  var c = document.getElementById("grades-container");
+  if (!c) return;
+  Object.keys(curriculum).forEach(function(g) {
+    var d = curriculum[g];
+    var card = document.createElement("div");
+    card.className = "grade-card";
+    card.innerHTML = "<h3>" + d.name + "</h3><p>" + d.desc + "</p><div class=\"grade-meta\"><span class=\"grade-badge\">" + Object.keys(d.subjects).length + " Subjects</span></div>";
+    card.onclick = function() { showSubjects(g); };
+    c.appendChild(card);
+  });
+}
+function showSubjects(grade) {
+  currentGrade = grade;
+  var d = curriculum[grade];
+  document.getElementById("subjects-grade-title").textContent = d.name + " Subjects";
+  document.getElementById("subjects-grade-desc").textContent = d.desc;
+  var c = document.getElementById("subjects-container");
+  c.innerHTML = "";
+  Object.keys(d.subjects).forEach(function(subj) {
+    var s = d.subjects[subj];
+    var card = document.createElement("div");
+    card.className = "subject-card";
+    var imgUrl = subjectImages[subj] && subjectImages[subj].subject ? subjectImages[subj].subject : "";
+    var imgHtml = imgUrl ? '<div class="subject-img-wrap"><img src="' + imgUrl + '" alt="' + subj + '" onerror="this.style.display=\'none\'"></div>' : "";
+    var tags = s.topics.slice(0, 3).map(function(t) { return "<span class=\"topic-tag\">" + t + "</span>"; }).join("");
+    var more = s.topics.length > 3 ? "<span class=\"topic-tag\">+" + (s.topics.length - 3) + "</span>" : "";
+    card.innerHTML = imgHtml + "<h4><i class=\"fas fa-book\"></i>" + subj + "</h4><p>" + s.topics.length + " Topics &middot; " + s.lessons.length + " Lessons &middot; " + s.exams.length + " Past Exams</p><div class=\"topic-tags\">" + tags + more + "</div>";
+    card.onclick = function() { showContent(grade, subj); };
+    c.appendChild(card);
+  });
+  showSection("subjects");
+}
+function backToSubjects() { showSubjects(currentGrade); }
+// ===== CONTENT VIEWER =====
+function showContent(grade, subject) {
+  currentSubject = subject;
+  var d = curriculum[grade].subjects[subject];
+  document.getElementById("content-title").textContent = subject;
+  document.getElementById("content-subtitle").textContent = "Grade " + grade + " — " + d.topics.length + " Topics";
+  var ll = document.getElementById("lessons-list");
+  ll.innerHTML = "";
+  currentLessonGrade = null; currentLessonSubject = null; currentLessonTitle = null;
+  d.lessons.forEach(function(l, i) {
+    var li = document.createElement("li");
+    li.className = "lesson-item";
+    li.style.flexWrap = "wrap";
+    li.dataset.lesson = l;
+    li.dataset.grade = grade;
+    li.dataset.subject = subject;
+    li.innerHTML = "<span style=\"display:flex;align-items:center;gap:10px;\"><i class=\"fas fa-book-open\" style=\"color:var(--accent);\"></i>Lesson " + (i+1) + ": " + l + "</span><button class=\"btn btn-primary btn-sm\" style=\"font-size:0.75rem;padding:4px 10px;\" onclick=\"event.stopPropagation();selectLesson('" + grade + "', " + JSON.stringify(subject) + ", " + JSON.stringify(l) + ", this.closest('li'))\"><i class=\"fas fa-book-reader\"></i> Open Lesson</button>";
+    li.onclick = function(e) { if (e.target.closest("button")) return; selectLesson(grade, subject, l, li); };
+    ll.appendChild(li);
+  });
+  showSubjectOverview(grade, subject);
+  var el = document.getElementById("exams-list");
+  el.innerHTML = "";
+  d.exams.forEach(function(exam) {
+    var div = document.createElement("div");
+    div.style.cssText = "padding:14px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;";
+    div.innerHTML = "<span style=\"font-size:0.9rem;color:var(--text-primary);display:flex;align-items:center;gap:10px;\"><i class=\"fas fa-file-pdf\" style=\"color:var(--danger);font-size:0.9rem;\"></i>" + exam + "</span>";
+    var btn = document.createElement("button");
+    btn.className = "btn btn-primary btn-sm";
+    btn.innerHTML = "<i class=\"fas fa-pencil-alt\"></i> Write Exam";
+    btn.onclick = function(e) { e.stopPropagation(); startExam(exam, grade, subject); };
+    div.appendChild(btn);
+    el.appendChild(div);
+  });
+  switchTab("lessons", document.querySelector(".content-tab"));
+  showSection("content");
+}
+async function toggleLesson(btn) {
+  if (!BACKEND_URL) { showToast("This app isn't connected to its AI service yet. Please try again later.", "error"); return; }
+  var li = btn.closest("li");
+  var contentDiv = li.querySelector(".lesson-generated");
+  if (contentDiv) {
+    contentDiv.remove();
+    btn.innerHTML = '<i class="fas fa-magic"></i> Generate';
+    return;
+  }
+  document.querySelectorAll(".lesson-generated").forEach(function(e) { e.remove(); });
+  document.querySelectorAll(".lesson-item button").forEach(function(b) { if(b !== btn) b.innerHTML = '<i class="fas fa-magic"></i> Generate'; });
+  var grade = li.dataset.grade;
+  var subject = li.dataset.subject;
+  var lessonTitle = li.dataset.lesson;
+  contentDiv = document.createElement("div");
+  contentDiv.className = "lesson-generated";
+  contentDiv.innerHTML = '<div class="typing-indicator" style="padding:0;"><span></span><span></span><span></span></div><p style="color:var(--text-muted);font-size:0.8rem;">Generating lesson via ENLIGHTQUANTS AI Neural Engine...</p>';
+  li.appendChild(contentDiv);
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading';
+  var content = await generateLessonContent(grade, subject, lessonTitle);
+  if (content) {
+    contentDiv.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="groq-badge"><i class="fas fa-bolt"></i> ENLIGHTQUANTS AI</span><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();regenerateLesson(this)" style="font-size:0.75rem;padding:4px 10px;"><i class="fas fa-redo"></i> Regenerate</button></div>' + content;
+  } else {
+    contentDiv.innerHTML = '<p style="color:var(--danger);">Failed to generate lesson. Check your Groq API key and ensure the ENLIGHTQUANTS AI Engine is accessible.</p>';
+  }
+  btn.innerHTML = '<i class="fas fa-times"></i> Close';
+}
+async function regenerateLesson(btn) {
+  var contentDiv = btn.closest(".lesson-generated");
+  var li = contentDiv.closest("li");
+  var grade = li.dataset.grade;
+  var subject = li.dataset.subject;
+  var lessonTitle = li.dataset.lesson;
+  var key = cacheKey("lesson", grade, subject, lessonTitle);
+  localStorage.removeItem(key);
+  contentDiv.innerHTML = '<div class="typing-indicator" style="padding:0;"><span></span><span></span><span></span></div><p style="color:var(--text-muted);font-size:0.8rem;">Regenerating...</p>';
+  var content = await generateLessonContent(grade, subject, lessonTitle);
+  if (content) {
+    contentDiv.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="groq-badge"><i class="fas fa-bolt"></i> ENLIGHTQUANTS AI</span><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();regenerateLesson(this)" style="font-size:0.75rem;padding:4px 10px;"><i class="fas fa-redo"></i> Regenerate</button></div>' + content;
+  }
+}
+function switchTab(tab, el) {
+  if (!el) el = document.querySelector(".content-tab");
+  document.querySelectorAll(".content-tab").forEach(function(t) { t.classList.remove("active"); });
+  document.querySelectorAll(".content-panel").forEach(function(p) { p.classList.remove("active"); });
+  if (el) el.classList.add("active");
+  var panel = document.getElementById("panel-" + tab);
+  if (panel) panel.classList.add("active");
+}
+function openVideo(title, videoId, desc) {
+  document.getElementById("video-title").textContent = title;
+  document.getElementById("video-desc").textContent = desc;
+  document.getElementById("video-iframe").src = "https://www.youtube.com/embed/" + videoId;
+  showModal("video");
+}
+// ===== SUBJECT OVERVIEW (shown before a lesson is opened) =====
+function showSubjectOverview(grade, subject) {
+  var d = curriculum[grade].subjects[subject];
+  var notesHtml = d.notes;
+  var subjImg = subjectImages[subject] && subjectImages[subject].subject ? subjectImages[subject].subject : "";
+  if (subjImg) {
+    notesHtml = '<div class="subject-header-img"><img src="' + subjImg + '" alt="' + subject + '" onerror="this.style.display=\'none\'"></div>' + notesHtml;
+  }
+  notesHtml += '<div class="key-point" style="margin-top:20px;"><i class="fas fa-hand-point-right"></i> This is a subject overview. Click "Open Lesson" on any lesson to the left for a full explained summary of that specific lesson, plus real matching YouTube videos.</div>';
+  document.getElementById("notes-content").innerHTML = notesHtml;
+  document.getElementById("videos-grid").innerHTML = '<div class="empty-state"><i class="fas fa-video"></i><h3>Select a lesson</h3><p>Open any lesson on the left to load real YouTube videos matched to that exact topic.</p></div>';
+  var gallery = document.getElementById("lesson-images-gallery");
+  if (gallery) gallery.innerHTML = "";
+}
+// ===== SELECT A LESSON: load real per-lesson notes + real per-lesson YouTube videos =====
+function selectLesson(grade, subject, lessonTitle, liEl) {
+  currentLessonGrade = grade; currentLessonSubject = subject; currentLessonTitle = lessonTitle;
+  document.querySelectorAll(".lesson-item").forEach(function(el) { el.classList.remove("active-lesson"); });
+  if (liEl) liEl.classList.add("active-lesson");
+  var notesTabBtn = document.querySelector('.content-tab[onclick*="\'notes\'"]');
+  switchTab("notes", notesTabBtn);
+  loadLessonNotes(grade, subject, lessonTitle);
+  loadLessonVideos(grade, subject, lessonTitle);
+  loadLessonImages(grade, subject, lessonTitle);
+}
+// ===== REAL SUPPLEMENTARY REFERENCE IMAGES (free, open-licensed, via backend) =====
+// These are REAL photos/diagrams (not AI-drawn) sourced from Creative Commons collections
+// (Wikimedia Commons, museums, etc. via Openverse) — a complement to the AI's own inline
+// SVG diagrams in the lesson notes above, which handle exact theorem/formula visuals.
+async function loadLessonImages(grade, subject, lessonTitle) {
+  var gallery = document.getElementById("lesson-images-gallery");
+  gallery.innerHTML = "";
+  if (!BACKEND_URL || !authToken) return;
+  try {
+    var res = await fetch(BACKEND_URL + "/api/lesson-images?" + new URLSearchParams({ grade: String(grade), subject: subject, lesson: lessonTitle }), {
+      headers: { "Authorization": "Bearer " + authToken }
+    });
+    var data = await res.json();
+    if (!res.ok || currentLessonTitle !== lessonTitle) return;
+    var results = data.results || [];
+    if (!results.length) return;
+    var html = '<div class="image-gallery"><p class="image-gallery-title"><i class="fas fa-images"></i> Reference images (openly licensed)</p>';
+    results.forEach(function(img) {
+      html += '<a class="gallery-card" href="' + img.source + '" target="_blank" rel="noopener">' +
+        '<img src="' + img.thumbnail + '" alt="' + img.title + '" loading="lazy" onerror="this.closest(\'.gallery-card\').style.display=\'none\'">' +
+        '<div class="gallery-card-attribution">' + img.title + '<br>' + img.creator + ' — ' + img.license + '</div>' +
+        '</a>';
+    });
+    html += '</div>';
+    gallery.innerHTML = html;
+  } catch (e) {
+    console.warn("lesson-images failed:", e.message);
+  }
+}
+// ===== REAL AI-GENERATED, LESSON-SPECIFIC EXPLAINED NOTES =====
+async function loadLessonNotes(grade, subject, lessonTitle) {
+  var panel = document.getElementById("notes-content");
+  panel.innerHTML = '<div class="lesson-notes-header"><h3 style="margin:0;color:var(--text-primary);"><i class="fas fa-book-open" style="color:var(--accent);margin-right:8px;"></i>' + lessonTitle + '</h3></div><div class="typing-indicator" style="padding:0;"><span></span><span></span><span></span></div><p style="color:var(--text-muted);font-size:0.8rem;">Generating a full explained summary of this lesson via ENLIGHTQUANTS AI Neural Engine...</p>';
+  if (!BACKEND_URL) {
+    panel.innerHTML = '<div class="lesson-notes-header"><h3 style="margin:0;color:var(--text-primary);">' + lessonTitle + '</h3></div><p style="color:var(--danger);">This app isn\'t connected to its AI service yet. Please try again later.</p>';
+    return;
+  }
+  var content = await generateLessonContent(grade, subject, lessonTitle);
+  if (currentLessonTitle !== lessonTitle) return; // user navigated away while loading
+  if (content) {
+    panel.innerHTML = '<div class="lesson-notes-header"><h3 style="margin:0;color:var(--text-primary);"><i class="fas fa-book-open" style="color:var(--accent);margin-right:8px;"></i>' + lessonTitle + '</h3><button class="btn btn-ghost btn-sm" onclick="regenerateLessonNotes()"><i class="fas fa-redo"></i> Regenerate</button></div>' + content;
+  } else {
+    panel.innerHTML = '<div class="lesson-notes-header"><h3 style="margin:0;color:var(--text-primary);">' + lessonTitle + '</h3></div><p style="color:var(--danger);">Couldn\'t generate this lesson right now — please try again in a moment.</p>';
+  }
+}
+function regenerateLessonNotes() {
+  if (!currentLessonTitle) return;
+  var key = cacheKey("lesson", currentLessonGrade, currentLessonSubject, currentLessonTitle);
+  localStorage.removeItem(key);
+  loadLessonNotes(currentLessonGrade, currentLessonSubject, currentLessonTitle);
+}
+// ===== REAL VIDEO LINK FOR THIS EXACT LESSON =====
+// No YouTube Data API is used (avoids quota cost). The backend builds a precise, topic-scoped
+// YouTube URL for "Grade X {subject} {lesson} CAPS lesson South Africa" and the frontend shows
+// it as a direct "Watch on YouTube" link — always a real, topic-matched video, zero API cost.
+function ytCacheKey(grade, subject, lessonTitle) {
+  return "enlight_yt_" + grade + "_" + subject + "_" + lessonTitle;
+}
+async function loadLessonVideos(grade, subject, lessonTitle) {
+  var vg = document.getElementById("videos-grid");
+  vg.innerHTML = '<div class="typing-indicator" style="padding:0;"><span></span><span></span><span></span></div><p style="color:var(--text-muted);font-size:0.8rem;">Finding a real video on: ' + lessonTitle + '...</p>';
+  var ck = ytCacheKey(grade, subject, lessonTitle);
+  var cached = localStorage.getItem(ck);
+  if (cached) {
+    try { renderLessonVideo(JSON.parse(cached), grade, subject, lessonTitle); return; } catch(e) {}
+  }
+  if (!BACKEND_URL) {
+    vg.innerHTML = '<div class="empty-state"><i class="fab fa-youtube" style="color:#ff0000;"></i><h3>Not connected yet</h3><p style="margin-bottom:14px;">This app isn\'t connected to its video service yet. Please try again later.</p></div>';
+    return;
+  }
+  try {
+    var beRes = await fetch(BACKEND_URL + "/api/lesson-video?" + new URLSearchParams({ grade: String(grade), subject: subject, lesson: lessonTitle }), {
+      headers: { "Authorization": "Bearer " + authToken }
+    });
+    var beData = await beRes.json();
+    if (beRes.status === 401) { logout(); showToast("Your session expired — please log in again.", "error"); return; }
+    if (!beRes.ok) throw new Error(beData.detail || ("HTTP " + beRes.status));
+    if (currentLessonTitle !== lessonTitle) return;
+    localStorage.setItem(ck, JSON.stringify(beData));
+    renderLessonVideo(beData, grade, subject, lessonTitle);
+  } catch (e) {
+    if (currentLessonTitle !== lessonTitle) return;
+    vg.innerHTML = '<div class="empty-state"><i class="fab fa-youtube" style="color:#ff0000;"></i><h3>Couldn\'t load a video</h3><p style="margin-bottom:14px;">' + e.message + '</p></div>';
+  }
+}
+function renderLessonVideo(payload, grade, subject, lessonTitle) {
+  var vg = document.getElementById("videos-grid");
+  if (!payload || !payload.url) {
+    vg.innerHTML = '<div class="empty-state"><i class="fab fa-youtube" style="color:#ff0000;"></i><h3>No video link found</h3></div>';
+    return;
+  }
+  vg.innerHTML =
+    '<div class="empty-state" style="text-align:left;padding:24px;">' +
+      '<i class="fab fa-youtube" style="color:#ff0000;font-size:2.2rem;margin-bottom:10px;"></i>' +
+      '<h3 style="margin-bottom:6px;">Real lesson video, matched to this exact topic</h3>' +
+      '<p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:16px;">Grade ' + grade + ' ' + subject + ' — ' + lessonTitle + '</p>' +
+      '<a href="' + payload.url + '" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><i class="fab fa-youtube"></i> Watch on YouTube</a>' +
+    '</div>';
+}
+// ===== UNIVERSITY =====
+function initUniversity() {
+  var c = document.getElementById("uni-container");
+  if (!c) return;
+  universityData.faculties.forEach(function(f) {
+    var card = document.createElement("div");
+    card.className = "faculty-card";
+    var facImg = facultyImages[f.name] || "";
+    var imgHtml = facImg ? '<div class="faculty-img-wrap"><img src="' + facImg + '" alt="' + f.name + '" onerror="this.style.display=\'none\'"></div>' : "";
+    card.innerHTML = imgHtml + "<div class=\"faculty-header " + f.color + "\"><h3><i class=\"fas fa-university\" style=\"margin-right:8px;\"></i>" + f.name + "</h3><p>" + f.desc + "</p></div><div class=\"faculty-body\"><ul>" + f.courses.map(function(course) { return "<li data-faculty=\"" + f.name + "\" data-course=\"" + course + "\"><i class=\"fas fa-chevron-right\"></i>" + course + "</li>"; }).join("") + "</ul></div>";
+    c.appendChild(card);
+  });
+  document.querySelectorAll(".faculty-body li").forEach(function(li) {
+    li.onclick = function() { openUniversityLesson(li.dataset.faculty, li.dataset.course); };
+  });
+}
+async function openUniversityLesson(faculty, course) {
+  if (!BACKEND_URL) { showToast("This app isn't connected to its AI service yet. Please try again later.", "error"); return; }
+  document.getElementById("uni-lesson-title").textContent = course;
+  document.getElementById("uni-lesson-subtitle").textContent = faculty;
+  document.getElementById("uni-lesson-body").innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div><p style="color:var(--text-muted);font-size:0.85rem;">Generating university curriculum via ENLIGHTQUANTS AI Neural Engine...</p>';
+  showModal("uni-lesson");
+  var content = await generateUniversityLesson(faculty, course);
+  if (content) {
+    document.getElementById("uni-lesson-body").innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><span class="groq-badge"><i class="fas fa-bolt"></i> ENLIGHTQUANTS AI</span><button class="btn btn-ghost btn-sm" onclick="regenerateUniLesson()"><i class="fas fa-redo"></i> Regenerate</button></div>' + content;
+  } else {
+    document.getElementById("uni-lesson-body").innerHTML = '<p style="color:var(--danger);">Failed to generate content. Please check your API key.</p>';
+  }
+}
+async function regenerateUniLesson() {
+  var faculty = document.getElementById("uni-lesson-subtitle").textContent;
+  var course = document.getElementById("uni-lesson-title").textContent;
+  var key = cacheKey("uni", "uni", faculty, course);
+  localStorage.removeItem(key);
+  openUniversityLesson(faculty, course);
+}
+// ===== DASHBOARD =====
+function initDashboard() {
+  var pc = document.getElementById("progress-container");
+  if (!pc) return;
+  var subjects = [
+    {name:"Mathematics",progress:65,color:"green"},
+    {name:"Physical Sciences",progress:45,color:"blue"},
+    {name:"Life Sciences",progress:80,color:"green"},
+    {name:"English HL",progress:90,color:"green"},
+    {name:"History",progress:30,color:"orange"}
+  ];
+  subjects.forEach(function(s) {
+    var div = document.createElement("div");
+    div.className = "progress-item";
+    div.innerHTML = "<div class=\"progress-header\"><span class=\"progress-name\">" + s.name + "</span><span class=\"progress-value\">" + s.progress + "%</span></div><div class=\"progress-bar\"><div class=\"progress-fill " + s.color + "\" style=\"width:" + s.progress + "%\"></div></div>";
+    pc.appendChild(div);
+  });
+  var ac = document.getElementById("activity-container");
+  if (!ac) return;
+  var activities = [
+    {icon:"fa-video",text:"Watched Grade 11 Trigonometry Identities video",time:"2 hours ago"},
+    {icon:"fa-check-circle",text:"Completed Algebraic Equations lesson in Mathematics",time:"5 hours ago"},
+    {icon:"fa-file-alt",text:"Scored 82% on Physical Sciences practice exam",time:"1 day ago"},
+    {icon:"fa-robot",text:"Asked ENLIGHTQUANTS AI Tutor about Newton Laws",time:"2 days ago"}
+  ];
+  activities.forEach(function(a) {
+    var div = document.createElement("div");
+    div.className = "activity-item";
+    div.innerHTML = "<div class=\"activity-icon\" style=\"background:rgba(102,126,234,0.1);color:#667eea;\"><i class=\"fas " + a.icon + "\"></i></div><div><div class=\"activity-text\">" + a.text + "</div><div class=\"activity-time\">" + a.time + "</div></div>";
+    ac.appendChild(div);
+  });
+}
+// ===== AI TUTOR =====
+async function sendMessage() {
+  var input = document.getElementById("chat-input");
+  var msg = input.value.trim();
+  if (!msg) return;
+  if (!BACKEND_URL) { showToast("This app isn't connected to its AI service yet. Please try again later.", "error"); return; }
+  var chat = document.getElementById("chat-messages");
+  var userMsg = document.createElement("div");
+  userMsg.className = "chat-message user";
+  userMsg.textContent = msg;
+  chat.appendChild(userMsg);
+  input.value = "";
+  chat.scrollTop = chat.scrollHeight;
+  var typing = document.createElement("div");
+  typing.className = "chat-message bot typing-indicator";
+  typing.id = "typing-indicator";
+  typing.innerHTML = "<span></span><span></span><span></span>";
+  chat.appendChild(typing);
+  chat.scrollTop = chat.scrollHeight;
+  var sendBtn = document.getElementById("send-btn");
+  sendBtn.disabled = true;
+  chatHistory.push({role: "user", content: msg});
+  var response = await fetchTutorResponse(msg);
+  var indicator = document.getElementById("typing-indicator");
+  if (indicator) indicator.remove();
+  var botMsg = document.createElement("div");
+  botMsg.className = "chat-message bot";
+  if (response) {
+    botMsg.innerHTML = '<div class="bot-label"><i class="fas fa-bolt"></i> ENLIGHTQUANTS AI Tutor</div>' + response;
+    chatHistory.push({role: "assistant", content: response});
+  } else {
+    botMsg.innerHTML = '<div class="bot-label"><i class="fas fa-exclamation-circle"></i> Error</div>I am having trouble connecting to the ENLIGHTQUANTS AI Engine via Groq. Please verify your API key in Settings > API Key and ensure your Groq account is active.';
+  }
+  chat.appendChild(botMsg);
+  chat.scrollTop = chat.scrollHeight;
+  sendBtn.disabled = false;
+}
+async function fetchTutorResponse(userMessage) {
+  var systemPrompt = "You are ENLIGHTQUANTS AI, a world-class academic tutor specializing in South African education." +
+    " FORMATTING RULES: Always structure your responses with clear section headers using <h3>, important definitions in <blockquote>, formulas in <div class=\'formula-box\'>, key points in <div class=\'key-point\'>, worked examples in <div class=\'example-box\'> with <h4>Problem:</h4> and <h4>Solution:</h4>, comparison tables in <table>, and bullet lists in <ul>." +
+    " Use <strong> for emphasis, <code> for units and variables." +
+    " CAPS curriculum (Grades 8-12): Mathematics, Physical Sciences, Life Sciences, English, History, Geography, Accounting, Business Studies, Economics, Technology." +
+    " University courses for major SA universities." +
+    " Homework help, exam preparation, past paper solutions with step-by-step reasoning." +
+    " Deep concept explanations with worked examples and intuitive analogies.";
+  var messages = [
+    {role: "system", content: systemPrompt},
+    ...chatHistory.slice(-10),
+    {role: "user", content: userMessage}
+  ];
+  return await callAI(messages, 0.8, 4000);
+}
+// ===== EXAM SYSTEM =====
+async function startExam(name, grade, subject) {
+  document.getElementById("exam-title").textContent = name;
+  document.getElementById("exam-subtitle").textContent = "Grade " + grade + " — " + subject;
+  document.getElementById("submit-exam-btn").style.display = "none";
+  document.getElementById("exam-result-container").style.display = "none";
+  var qc = document.getElementById("exam-questions");
+  var realLink = document.getElementById("exam-real-paper-link");
+  realLink.style.display = "none";
+  qc.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div><p style="color:var(--text-muted);font-size:0.85rem;margin-top:10px;">Generating exam questions for ' + name + '...</p>';
+  examAnswers = [];
+  examQuestions = [];
+  showSection("exam");
+
+  if (!BACKEND_URL && !apiKey) {
+    qc.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Not connected</h3><p>This app isn\'t connected to its AI service yet.</p></div>';
+    return;
+  }
+
+  var searchQuery = name + " " + subject + " Grade " + grade + " CAPS past exam paper pdf";
+  realLink.href = "https://www.google.com/search?q=" + encodeURIComponent(searchQuery);
+  realLink.style.display = "inline-block";
+
+  var result = await generateExamQuestions(grade, subject, name);
+  if (!result || !result.length) {
+    qc.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Couldn\'t generate this exam</h3><p>Please try again in a moment, or use the real past paper link above.</p></div>';
+    return;
+  }
+  examQuestions = result;
+  qc.innerHTML = "";
+  examQuestions.forEach(function(q, i) {
+    var div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = "<h4>Question " + (i+1) + ": " + q.q + "</h4><div class=\"options\">" + q.opts.map(function(o, j) { return "<div class=\"option\" onclick=\"selectOption(this," + i + "," + j + ")\"><div class=\"option-circle\">" + String.fromCharCode(65+j) + "</div><span>" + o + "</span></div>"; }).join("") + "</div><p class=\"question-explanation\" id=\"explanation-" + i + "\" style=\"display:none;font-size:0.8rem;color:var(--text-muted);margin-top:8px;padding:8px 12px;background:var(--bg-tertiary);border-radius:var(--radius-sm);\"></p>";
+    qc.appendChild(div);
+  });
+  document.getElementById("submit-exam-btn").style.display = "block";
+  examTime = 1800;
+  updateTimer();
+  if (examTimer) clearInterval(examTimer);
+  examTimer = setInterval(updateTimer, 1000);
+}
+// ===== REAL, EXAM-SPECIFIC AI-GENERATED QUESTIONS (cached per grade+subject+exam on the backend) =====
+async function generateExamQuestions(grade, subject, examName) {
+  if (BACKEND_URL) {
+    try {
+      var res = await fetch(BACKEND_URL + "/api/exam-questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + authToken },
+        body: JSON.stringify({ grade: String(grade), subject: subject, exam: examName })
+      });
+      var data = await res.json();
+      if (res.status === 401) { logout(); showToast("Your session expired — please log in again.", "error"); return null; }
+      if (res.status === 402) {
+        if (!apiKey) { showSection("payment"); showToast("Please complete payment to unlock exams.", "error"); return null; }
+      } else if (res.ok) {
+        return data.questions;
+      }
+    } catch (e) {
+      console.warn("Backend exam-questions failed, falling back:", e.message);
+    }
+  }
+  if (!apiKey) return null;
+  var prompt = "Generate exactly 8 realistic South African CAPS-aligned multiple choice exam questions for \"" + examName + "\", subject \"" + subject + "\", Grade " + grade + ". " +
+    "Cover a spread of the real topics examinable in this specific paper, not generic filler questions. " +
+    "Use proper mathematical notation with real superscript characters (x², x³) and correctly placed brackets, never x^2 or x**2. " +
+    "Respond with ONLY a valid JSON array, no markdown, no commentary, in this exact shape: " +
+    '[{"q":"question text","opts":["A","B","C","D"],"correct":0,"explanation":"why this answer is correct, one sentence"}]';
+  var raw = await callAI([
+    {role: "system", content: "You are an exam-setting assistant. You always respond with ONLY valid JSON, no prose, no markdown fences."},
+    {role: "user", content: prompt}
+  ], 0.5, 3000);
+  if (!raw) return null;
+  try {
+    var cleaned = raw.replace(/```json|```/g, "").trim();
+    return JSON.parse(cleaned);
+  } catch (e) {
+    console.error("Failed to parse AI exam JSON:", e, raw);
+    return null;
+  }
+}
+function updateTimer() {
+  var m = Math.floor(examTime / 60), s = examTime % 60;
+  var timer = document.getElementById("exam-timer");
+  if (timer) timer.innerHTML = '<i class="fas fa-clock"></i> ' + m.toString().padStart(2,"0") + ":" + s.toString().padStart(2,"0");
+  if (examTime <= 0) { if (examTimer) clearInterval(examTimer); submitExam(); }
+  examTime--;
+}
+function selectOption(el, question, option) {
+  var options = el.parentElement.querySelectorAll(".option");
+  options.forEach(function(o) { o.classList.remove("selected"); });
+  el.classList.add("selected");
+  examAnswers[question] = option;
+}
+function submitExam() {
+  if (examTimer) clearInterval(examTimer);
+  var correct = 0;
+  var questions = document.querySelectorAll(".question");
+  questions.forEach(function(q, i) {
+    var opts = q.querySelectorAll(".option");
+    var correctIdx = examQuestions[i].correct;
+    opts.forEach(function(o, j) {
+      if (j === correctIdx) {
+        o.classList.add("correct");
+      } else if (examAnswers[i] === j && j !== correctIdx) {
+        o.classList.add("wrong");
+      }
+    });
+    if (examAnswers[i] === correctIdx) correct++;
+    var expEl = document.getElementById("explanation-" + i);
+    if (expEl && examQuestions[i].explanation) {
+      expEl.textContent = "Why: " + examQuestions[i].explanation;
+      expEl.style.display = "block";
+    }
+  });
+  var score = Math.round((correct / examQuestions.length) * 100);
+  var resultContainer = document.getElementById("exam-result-container");
+  resultContainer.style.display = "block";
+  resultContainer.innerHTML = "<div class=\"exam-result\"><div class=\"exam-result-score\">" + score + "%</div><div class=\"exam-result-label\">" + correct + " out of " + examQuestions.length + " correct</div><div class=\"exam-result-breakdown\"><div class=\"exam-result-item\"><div class=\"value\">" + correct + "</div><div class=\"label\">Correct</div></div><div class=\"exam-result-item\"><div class=\"value\">" + (examQuestions.length - correct) + "</div><div class=\"label\">Incorrect</div></div><div class=\"exam-result-item\"><div class=\"value\">" + examQuestions.length + "</div><div class=\"label\">Total</div></div></div></div>";
+  document.getElementById("submit-exam-btn").style.display = "none";
+  var examCount = document.getElementById("stat-exams");
+  if (examCount) {
+    var current = parseInt(examCount.textContent);
+    examCount.textContent = current + 1;
+  }
+  showToast("Exam submitted! You scored " + score + "%", score >= 50 ? "success" : "info");
+}
+</script>
+</body>
+</html>
